@@ -2,7 +2,7 @@ name: Publish on Release
 
 on:
   release:
-    types: [ published ]  # Triggers when you publish a release through GitHub UI
+    types: [published]  # Triggers when you publish a release through GitHub UI
 
 permissions:
   contents: write  # To push updated files back to main
@@ -17,7 +17,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
+          ref: main  # Always checkout main branch, not the tag
           token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0  # Fetch all history
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
