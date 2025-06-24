@@ -1,0 +1,100 @@
+name: Publish on Release
+
+on:
+  release:
+    types: [ published ]  # Triggers when you publish a release through GitHub UI
+
+permissions:
+  contents: write  # To push updated files back to main
+  packages: write  # For GitHub packages (optional)
+
+jobs:
+  publish:
+    name: Build and Publish
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 8
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'pnpm'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Extract version and package info
+        id: package_info
+        run: |
+          # Get the tag name from the release (e.g., v1.2.3)
+          TAG_NAME="${{ github.event.release.tag_name }}"
+          
+          # Remove 'v' prefix if present (v1.2.3 → 1.2.3)
+          VERSION=${TAG_NAME#v}
+          
+          # Get package name from package.json
+          PACKAGE_NAME=$(node -p "require('./package.json').name")
+          
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+          echo "package_name=${PACKAGE_NAME}" >> $GITHUB_OUTPUT
+          echo "📦 Package: ${PACKAGE_NAME}"
+          echo "📦 Version to publish: ${VERSION}"
+
+      - name: Update package.json version
+        run: |
+          # Update package.json with the release version
+          npm version ${{ steps.package_info.outputs.version }} --no-git-tag-version
+          echo "✅ Updated package.json to version ${{ steps.package_info.outputs.version }}"
+
+      - name: Build package
+        run: |
+          echo "🏗️ Building package..."
+          pnpm build
+          echo "✅ Build completed"
+
+      - name: Commit and push updated files
+        run: |
+          # Configure git
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          
+          # Add updated files
+          git add package.json dist/
+          
+          # Check if there are changes to commit
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "🔖 Release v${{ steps.package_info.outputs.version }} - Update package.json and build files"
+            git push origin main
+            echo "✅ Pushed updated files to main branch"
+          fi
+
+      - name: Publish to npm
+        run: |
+          echo "📦 Publishing to npm..."
+          pnpm publish --access public --no-git-checks
+          echo "✅ Successfully published to npm"
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Success notification
+        run: |
+          echo "🎉 Successfully published ${{ steps.package_info.outputs.package_name }}@${{ steps.package_info.outputs.version }}"
+          echo ""
+          echo "📦 Package is now available:"
+          echo "   • npm: https://www.npmjs.com/package/${{ steps.package_info.outputs.package_name }}"
+          echo "   • CDN: https://unpkg.com/${{ steps.package_info.outputs.package_name }}@${{ steps.package_info.outputs.version }}"
+          echo ""
+          echo "🚀 Demo: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/"
