@@ -7,6 +7,9 @@ on:
     branches: [ main, master ]
   workflow_dispatch: # Allow manual trigger
 
+permissions:
+  contents: write # Required to push to demo branch
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
