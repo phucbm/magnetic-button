@@ -83,10 +83,32 @@ jobs:
             echo "✅ Pushed updated files to main branch"
           fi
 
+      - name: Verify npm authentication
+        run: |
+          if [ -z "${{ secrets.NPM_TOKEN }}" ]; then
+            echo "❌ NPM_TOKEN secret is not set"
+            echo "Please add your npm token to GitHub Secrets:"
+            echo "1. Go to https://www.npmjs.com → Profile → Access Tokens"
+            echo "2. Create 'Automation' token with 'Publish' permission"
+            echo "3. Add to GitHub: Settings → Secrets → Actions → NPM_TOKEN"
+            exit 1
+          else
+            echo "✅ NPM_TOKEN is set"
+            # Test authentication
+            npm whoami || echo "Authentication will be tested during publish"
+          fi
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
       - name: Publish to npm
         run: |
           echo "📦 Publishing to npm..."
-          pnpm publish --access public --no-git-checks
+          
+          # Verify authentication
+          npm whoami || echo "Not authenticated yet"
+          
+          # Publish package
+          npm publish --access public
           echo "✅ Successfully published to npm"
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
