@@ -36,6 +36,8 @@ jobs:
 
       - name: Build demo
         run: pnpm run build:demo
+        env:
+          VITE_BASE_PATH: /${{ github.event.repository.name }}/
 
       - name: Configure Git
         run: |

@@ -2,6 +2,9 @@ import {defineConfig} from 'vite'
 import {resolve} from 'path'
 
 export default defineConfig({
+    // Dynamic base path for GitHub Pages deployment
+    base: process.env.VITE_BASE_PATH || '/',
+
     // Development server configuration
     server: {
         port: 3000,
