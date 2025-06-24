@@ -1,0 +1,64 @@
+name: Deploy Demo
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetch all history for all branches
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build demo
+        run: npm run build:demo
+
+      - name: Configure Git
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+      - name: Deploy to demo branch
+        run: |
+          # Create or switch to demo branch
+          git checkout -B demo
+          
+          # Remove all files except dist-demo and .git
+          find . -maxdepth 1 ! -name 'dist-demo' ! -name '.git' ! -name '.' -exec rm -rf {} +
+          
+          # Move dist-demo contents to root
+          mv dist-demo/* ./ 2>/dev/null || true
+          mv dist-demo/.[^.]* ./ 2>/dev/null || true
+          rmdir dist-demo 2>/dev/null || true
+          
+          # Add all files
+          git add .
+          
+          # Check if there are changes to commit
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Deploy demo - $(date '+%Y-%m-%d %H:%M:%S')"
+            git push origin demo --force
+          fi
+
+      - name: Output demo URL
+        run: |
+          echo "Demo will be available at:"
+          echo "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/"
