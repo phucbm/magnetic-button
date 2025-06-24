@@ -82,6 +82,9 @@ export class MagneticButton {
     private isEnter: boolean = false;
     private lerpPos: LerpPosition = {x: 0, y: 0};
 
+    // Track initialized elements to avoid duplicates
+    private static initializedElements = new WeakSet<HTMLElement>();
+
     /**
      * Creates a new MagneticButton instance
      * @param target - The HTML element to apply magnetic effect to. If null, auto-initializes all elements with data-magnetic attribute
@@ -91,10 +94,21 @@ export class MagneticButton {
         // If no target is provided, select all elements with data-magnetic attribute
         if (!target) {
             document.querySelectorAll<HTMLElement>('[data-magnetic]').forEach(element => {
-                new MagneticButton(element, options);
+                // Skip if already initialized
+                if (!MagneticButton.initializedElements.has(element)) {
+                    new MagneticButton(element, options);
+                }
             });
             return; // Exit constructor if initializing multiple instances
         }
+
+        // Skip if this element is already initialized
+        if (MagneticButton.initializedElements.has(target)) {
+            return;
+        }
+
+        // Mark as initialized
+        MagneticButton.initializedElements.add(target);
 
         // Extract and validate data attributes
         const dataDistance = parseFloat(target.getAttribute('data-distance') || '');
@@ -200,9 +214,9 @@ export class MagneticButton {
 }
 
 /**
- * Auto-initialize magnetic buttons when DOM is ready
+ * Auto-initialize magnetic buttons when DOM is ready (only in browser environment)
  */
-if (typeof document !== 'undefined') {
+if (typeof window !== 'undefined' && typeof document !== 'undefined') {
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => new MagneticButton());
     } else {

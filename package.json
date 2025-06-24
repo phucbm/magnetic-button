@@ -4,9 +4,12 @@
   "description": "A lightweight TypeScript library that creates smooth magnetic attraction effects for HTML elements",
   "main": "dist/index.js",
   "module": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "browser": "dist/magnetic-button.js",
+  "types": "dist/index.d.mts",
   "files": [
-    "dist"
+    "dist/**/*",
+    "README.md",
+    "LICENSE"
   ],
   "scripts": {
     "dev": "vite",
@@ -14,6 +17,7 @@
     "build:demo": "vite build",
     "clean": "rm -rf dist dist-demo",
     "preview": "vite preview",
+    "prepublishOnly": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -25,8 +29,19 @@
     "ui",
     "interaction"
   ],
-  "author": "phucbm",
+  "author": {
+    "name": "phucbm",
+    "url": "https://github.com/phucbm"
+  },
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/phucbm/magnetic-button.git"
+  },
+  "bugs": {
+    "url": "https://github.com/phucbm/magnetic-button/issues"
+  },
+  "homepage": "https://phucbm.github.io/magnetic-button/",
   "devDependencies": {
     "@types/node": "^24.0.3",
     "tsup": "^8.5.0",
@@ -35,8 +50,19 @@
   },
   "exports": {
     ".": {
-      "import": "./dist/index.js",
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.js"
+      },
       "types": "./dist/index.d.ts"
-    }
-  }
+    },
+    "./package.json": "./package.json"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "sideEffects": false
 }
