@@ -1,0 +1,42 @@
+{
+  "name": "@phucbm/magnetic-button",
+  "version": "1.0.0",
+  "description": "A lightweight TypeScript library that creates smooth magnetic attraction effects for HTML elements",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "npm run clean && tsup",
+    "build:demo": "vite build",
+    "clean": "rm -rf dist dist-demo",
+    "preview": "vite preview",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "magnetic",
+    "button",
+    "hover",
+    "animation",
+    "typescript",
+    "ui",
+    "interaction"
+  ],
+  "author": "phucbm",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^24.0.3",
+    "tsup": "^8.5.0",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.5"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  }
+}
