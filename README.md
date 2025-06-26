@@ -4,9 +4,15 @@ A lightweight TypeScript library that creates smooth magnetic attraction effects
 the `data-magnetic` attribute will gently follow the mouse cursor when it's nearby, creating an engaging hover
 interaction.
 
-[![npm version](https://badge.fury.io/js/%40phucbm%2Fmagnetic-button.svg)](https://www.npmjs.com/package/@phucbm/magnetic-button)
-[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![npm version](https://badgen.net/npm/v/@phucbm/magnetic-button?icon=npm)](https://www.npmjs.com/package/@phucbm/magnetic-button)
+[![npm downloads](https://badgen.net/npm/dm/@phucbm/magnetic-button?icon=npm)](https://www.npmjs.com/package/@phucbm/magnetic-button)
+[![npm downloads](https://badgen.net/npm/dependents/@phucbm/magnetic-button?icon=npm)](https://www.npmjs.com/package/@phucbm/magnetic-button)
+[![jsdelivr hits](https://badgen.net/jsdelivr/hits/gh/phucbm/magnetic-button?icon=jsdelivr)](https://www.jsdelivr.com/package/gh/phucbm/magnetic-button)
+[![GitHub release](https://badgen.net/jsdelivr/rank/npm/@phucbm/magnetic-button?icon=jsdelivr)](https://github.com/phucbm/magnetic-button/releases)
+[![pages-build-deployment](https://github.com/phucbm/magnetic-button/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/phucbm/magnetic-button/actions/workflows/pages/pages-build-deployment)
+[![Publish on Release](https://github.com/phucbm/magnetic-button/actions/workflows/publish-on-release.yml/badge.svg)](https://github.com/phucbm/magnetic-button/actions/workflows/publish-on-release.yml)
+[![license](https://badgen.net/github/license/phucbm/magnetic-button?icon=github)](https://github.com/phucbm/magnetic-button/blob/main/LICENSE)
+[![Made in Vietnam](https://raw.githubusercontent.com/webuild-community/badge/master/svg/made.svg)](https://webuild.community)
 
 ## ✨ Features
 
