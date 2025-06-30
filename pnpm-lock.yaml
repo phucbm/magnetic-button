@@ -7,10 +7,20 @@ settings:
 importers:
 
   .:
+    dependencies:
+      '@phucbm/lerp':
+        specifier: ^1.0.0
+        version: 1.0.0
     devDependencies:
+      '@types/lodash':
+        specifier: ^4.17.19
+        version: 4.17.19
       '@types/node':
         specifier: ^24.0.3
         version: 24.0.3
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
       tsup:
         specifier: ^8.5.0
         version: 8.5.0(postcss@8.5.6)(typescript@5.8.3)
@@ -195,6 +205,10 @@ packages:
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
 
+  '@phucbm/lerp@1.0.0':
+    resolution: {integrity: sha512-umo4dIE3tvHpmEXcg3r1aaLs6ncP/qixcb8KF3Xi+nvnhLT9eXzTvYSOmSf1TIpOBlOaBsZIOS6uD2heHnoh7w==}
+    engines: {node: '>=16'}
+
   '@pkgjs/parseargs@0.11.0':
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
     engines: {node: '>=14'}
@@ -301,6 +315,9 @@ packages:
 
   '@types/estree@1.0.8':
     resolution: {integrity: sha512-dWHzHa2WqEXI/O1E9OjrocMTKJl2mSrEolh1Iomrv6U+JuNwaHXsXx9bLu5gG7BUWFIN0skIQJQ/L1rIex4X6w==}
+
+  '@types/lodash@4.17.19':
+    resolution: {integrity: sha512-NYqRyg/hIQrYPT9lbOeYc3kIRabJDn/k4qQHIXUpx88CBDww2fD15Sg5kbXlW86zm2XEW4g0QxkTI3/Kfkc7xQ==}
 
   '@types/node@24.0.3':
     resolution: {integrity: sha512-R4I/kzCYAdRLzfiCabn9hxWfbuHS573x+r0dJMkkzThEa7pbrcDWK+9zu3e7aBOouf+rQAciqPFMnxwr0aWgKg==}
@@ -445,6 +462,9 @@ packages:
 
   lodash.sortby@4.7.0:
     resolution: {integrity: sha512-HDWXG8isMntAyRF5vZ7xKuEvOhT4AhlRt/3czTSjvGUxjYCBVRQY48ViDHyfYz9VIoBkW4TMGQNapx+l3RUwdA==}
+
+  lodash@4.17.21:
+    resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
 
   lru-cache@10.4.3:
     resolution: {integrity: sha512-JNAzZcXrCt42VGLuYz0zfAzDfAvJWW6AfYlDBQyDV5DClI2m5sAmK+OIO7s59XfsRsWHp02jAJrRadPRGTt6SQ==}
@@ -802,6 +822,8 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
+  '@phucbm/lerp@1.0.0': {}
+
   '@pkgjs/parseargs@0.11.0':
     optional: true
 
@@ -866,6 +888,8 @@ snapshots:
     optional: true
 
   '@types/estree@1.0.8': {}
+
+  '@types/lodash@4.17.19': {}
 
   '@types/node@24.0.3':
     dependencies:
@@ -1004,6 +1028,8 @@ snapshots:
   load-tsconfig@0.2.5: {}
 
   lodash.sortby@4.7.0: {}
+
+  lodash@4.17.21: {}
 
   lru-cache@10.4.3: {}
 
