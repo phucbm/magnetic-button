@@ -64,5 +64,8 @@
   "engines": {
     "node": ">=16"
   },
-  "sideEffects": false
+  "sideEffects": false,
+  "dependencies": {
+    "@phucbm/lerp": "^1.0.0"
+  }
 }

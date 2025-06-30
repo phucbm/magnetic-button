@@ -5,6 +5,8 @@
  * @author Original by phucbm
  */
 
+import lerp from "@phucbm/lerp";
+
 /**
  * Configuration options for the magnetic button effect
  */
@@ -67,7 +69,7 @@ interface LerpPosition {
  * ```
  */
 export class MagneticButton {
-    private settings: Required<MagneticButtonOptions> = {
+    private readonly settings: Required<MagneticButtonOptions> = {
         activeClass: 'magnetizing',
         attraction: 0.3,
         distance: 200,
@@ -162,16 +164,6 @@ export class MagneticButton {
         }
     }
 
-    /**
-     * Linear interpolation function for smooth animation
-     * @param start - Starting value
-     * @param end - Target value
-     * @param fraction - Interpolation factor (0 = no change, 1 = instant)
-     * @returns Interpolated value
-     */
-    private lerp(start: number, end: number, fraction: number = this.settings.fraction): number {
-        return start * (1 - fraction) + end * fraction;
-    }
 
     /**
      * Applies smooth animation to the button using transform
@@ -181,8 +173,9 @@ export class MagneticButton {
      */
     private animateButton(target: HTMLElement, endX: number, endY: number): void {
         // Get interpolated position values
-        this.lerpPos.x = this.lerp(this.lerpPos.x, endX);
-        this.lerpPos.y = this.lerp(this.lerpPos.y, endY);
+        // this.lerpPos.x = this.lerp(this.lerpPos.x, endX);
+        this.lerpPos.x = lerp(this.lerpPos.x, endX, this.settings.fraction);
+        this.lerpPos.y = lerp(this.lerpPos.y, endY, this.settings.fraction);
 
         // Apply transform
         target.style.transform = `translate(${this.lerpPos.x}px, ${this.lerpPos.y}px)`;
