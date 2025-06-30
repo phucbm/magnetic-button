@@ -56,7 +56,7 @@ interface MagneticData {
  * ```
  */
 declare class MagneticButton {
-    private settings;
+    private readonly settings;
     private isEnter;
     private lerpPos;
     private static initializedElements;
@@ -72,14 +72,6 @@ declare class MagneticButton {
      * @param e - Mouse event
      */
     private magnetize;
-    /**
-     * Linear interpolation function for smooth animation
-     * @param start - Starting value
-     * @param end - Target value
-     * @param fraction - Interpolation factor (0 = no change, 1 = instant)
-     * @returns Interpolated value
-     */
-    private lerp;
     /**
      * Applies smooth animation to the button using transform
      * @param target - The target element

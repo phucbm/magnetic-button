@@ -1,5 +1,5 @@
 /*!
- * @phucbm/magnetic-button v0.0.2
+ * @phucbm/magnetic-button v0.0.3
  * A lightweight TypeScript library that creates smooth magnetic attraction effects for HTML elements
  * @license MIT
  */
@@ -31,6 +31,12 @@ var MagneticButton = (() => {
   __export(umd_exports, {
     default: () => umd_default
   });
+
+  // node_modules/.pnpm/@phucbm+lerp@1.0.0/node_modules/@phucbm/lerp/dist/index.js
+  function lerp(start, end, fraction = 0.1) {
+    return start * (1 - fraction) + end * fraction;
+  }
+  var index_default = lerp;
 
   // src/index.ts
   var _MagneticButton = class _MagneticButton {
@@ -104,24 +110,14 @@ var MagneticButton = (() => {
       }
     }
     /**
-     * Linear interpolation function for smooth animation
-     * @param start - Starting value
-     * @param end - Target value
-     * @param fraction - Interpolation factor (0 = no change, 1 = instant)
-     * @returns Interpolated value
-     */
-    lerp(start, end, fraction = this.settings.fraction) {
-      return start * (1 - fraction) + end * fraction;
-    }
-    /**
      * Applies smooth animation to the button using transform
      * @param target - The target element
      * @param endX - Target X position
      * @param endY - Target Y position
      */
     animateButton(target, endX, endY) {
-      this.lerpPos.x = this.lerp(this.lerpPos.x, endX);
-      this.lerpPos.y = this.lerp(this.lerpPos.y, endY);
+      this.lerpPos.x = index_default(this.lerpPos.x, endX, this.settings.fraction);
+      this.lerpPos.y = index_default(this.lerpPos.y, endY, this.settings.fraction);
       target.style.transform = `translate(${this.lerpPos.x}px, ${this.lerpPos.y}px)`;
     }
     /**
@@ -165,4 +161,13 @@ var MagneticButton = (() => {
   }
   return __toCommonJS(umd_exports);
 })();
+/*! Bundled license information:
+
+@phucbm/lerp/dist/index.js:
+  (*!
+   * @phucbm/lerp v1.0.0
+   * A lightweight TypeScript utility function for linear interpolation
+   * @license MIT
+   *)
+*/
 //# sourceMappingURL=magnetic-button.js.map

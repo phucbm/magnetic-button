@@ -1,5 +1,5 @@
 /*!
- * @phucbm/magnetic-button v0.0.2
+ * @phucbm/magnetic-button v0.0.3
  * A lightweight TypeScript library that creates smooth magnetic attraction effects for HTML elements
  * @license MIT
  */
@@ -9,6 +9,7 @@ var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { en
 var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
 
 // src/index.ts
+import lerp from "@phucbm/lerp";
 var _MagneticButton = class _MagneticButton {
   /**
    * Creates a new MagneticButton instance
@@ -80,24 +81,14 @@ var _MagneticButton = class _MagneticButton {
     }
   }
   /**
-   * Linear interpolation function for smooth animation
-   * @param start - Starting value
-   * @param end - Target value
-   * @param fraction - Interpolation factor (0 = no change, 1 = instant)
-   * @returns Interpolated value
-   */
-  lerp(start, end, fraction = this.settings.fraction) {
-    return start * (1 - fraction) + end * fraction;
-  }
-  /**
    * Applies smooth animation to the button using transform
    * @param target - The target element
    * @param endX - Target X position
    * @param endY - Target Y position
    */
   animateButton(target, endX, endY) {
-    this.lerpPos.x = this.lerp(this.lerpPos.x, endX);
-    this.lerpPos.y = this.lerp(this.lerpPos.y, endY);
+    this.lerpPos.x = lerp(this.lerpPos.x, endX, this.settings.fraction);
+    this.lerpPos.y = lerp(this.lerpPos.y, endY, this.settings.fraction);
     target.style.transform = `translate(${this.lerpPos.x}px, ${this.lerpPos.y}px)`;
   }
   /**
