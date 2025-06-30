@@ -173,7 +173,6 @@ export class MagneticButton {
      */
     private animateButton(target: HTMLElement, endX: number, endY: number): void {
         // Get interpolated position values
-        // this.lerpPos.x = this.lerp(this.lerpPos.x, endX);
         this.lerpPos.x = lerp(this.lerpPos.x, endX, this.settings.fraction);
         this.lerpPos.y = lerp(this.lerpPos.y, endY, this.settings.fraction);
 
