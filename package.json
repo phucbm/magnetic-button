@@ -43,7 +43,9 @@
   },
   "homepage": "https://phucbm.github.io/magnetic-button/",
   "devDependencies": {
+    "@types/lodash": "^4.17.19",
     "@types/node": "^24.0.3",
+    "lodash": "^4.17.21",
     "tsup": "^8.5.0",
     "typescript": "^5.8.3",
     "vite": "^6.3.5"

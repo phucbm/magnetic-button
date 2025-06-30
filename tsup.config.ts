@@ -1,5 +1,14 @@
 import {defineConfig} from 'tsup';
+import _ from 'lodash';
 import pkg from './package.json';
+
+// Extract the package name without namespace
+const getPackageName = (fullName: string): string => {
+    return fullName.includes('/') ? fullName.split('/')[1] : fullName;
+};
+
+const packageName = getPackageName(pkg.name);
+const globalName = _.upperFirst(_.camelCase(packageName));
 
 const banner = `/*!
  * ${pkg.name} v${pkg.version}
@@ -45,12 +54,12 @@ export default defineConfig([
 
     // UMD build
     {
-        entry: {'magnetic-button': 'src/umd.ts'},
+        entry: {[packageName]: 'src/umd.ts'},
         outDir: 'dist',
         format: ['iife'],
         target: 'es2020',
         platform: 'browser',
-        globalName: 'MagneticButton',
+        globalName: globalName,
         bundle: true,
         minify: false,
         sourcemap: true,
@@ -63,12 +72,12 @@ export default defineConfig([
 
     // UMD minified build
     {
-        entry: {'magnetic-button': 'src/umd.ts'},
+        entry: {[packageName]: 'src/umd.ts'},
         outDir: 'dist',
         format: ['iife'],
         target: 'es2020',
         platform: 'browser',
-        globalName: 'MagneticButton',
+        globalName: globalName,
         bundle: true,
         minify: true,
         sourcemap: true,
@@ -82,8 +91,8 @@ export default defineConfig([
             console.log(`📦 Generated files:`);
             console.log(`   • dist/index.js`);
             console.log(`   • dist/index.min.js`);
-            console.log(`   • dist/magnetic-button.js`);
-            console.log(`   • dist/magnetic-button.min.js`);
+            console.log(`   • dist/${packageName}.js`);
+            console.log(`   • dist/${packageName}.min.js`);
             console.log(`   • dist/index.d.ts\n`);
         }
     }
