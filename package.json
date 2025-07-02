@@ -2,6 +2,7 @@
   "name": "@phucbm/magnetic-button",
   "version": "0.0.3",
   "description": "A lightweight TypeScript library that creates smooth magnetic attraction effects for HTML elements",
+  "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "browser": "dist/magnetic-button.js",
@@ -18,7 +19,8 @@
     "clean": "rm -rf dist dist-demo",
     "preview": "vite preview",
     "prepublishOnly": "npm run build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "keywords": [
     "magnetic",
@@ -42,14 +44,6 @@
     "url": "https://github.com/phucbm/magnetic-button/issues"
   },
   "homepage": "https://phucbm.github.io/magnetic-button/",
-  "devDependencies": {
-    "@types/lodash": "^4.17.19",
-    "@types/node": "^24.0.3",
-    "lodash": "^4.17.21",
-    "tsup": "^8.5.0",
-    "typescript": "^5.8.3",
-    "vite": "^6.3.5"
-  },
   "exports": {
     ".": {
       "import": {
@@ -67,7 +61,19 @@
     "node": ">=16"
   },
   "sideEffects": false,
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "@types/lodash": "^4.17.19",
+    "@types/node": "^24.0.3",
+    "jest": "^30.0.3",
+    "jest-environment-jsdom": "^30.0.2",
+    "lodash": "^4.17.21",
+    "ts-jest": "^29.4.0",
+    "tsup": "^8.5.0",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.5"
+  },
   "dependencies": {
-    "@phucbm/lerp": "^1.0.0"
+    "@phucbm/lerp": "^1.0.1"
   }
 }

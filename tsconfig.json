@@ -13,12 +13,19 @@
     "rootDir": "./src",
     "declaration": true,
     "sourceMap": true,
-    "allowImportingTsExtensions": false,
-    "isolatedModules": true
+    "isolatedModules": true,
+    "lib": [
+      "ES2020",
+      "DOM",
+      "DOM.Iterable"
+    ]
   },
   "include": [
     "src/**/*",
-    "tsup.config.ts"
+    "tests/**/*",
+    "tsup.config.ts",
+    "node_modules/.pnpm/@types+node@24.0.8/node_modules/@types/node/globals.d.ts",
+    "node_modules/.pnpm/@types+node@24.0.8/node_modules/@types/node/globals.d.ts"
   ],
   "exclude": [
     "node_modules",
