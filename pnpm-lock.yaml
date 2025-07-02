@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@phucbm/lerp':
         specifier: ^1.0.0
-        version: 1.0.0
+        version: 1.0.1
     devDependencies:
       '@types/lodash':
         specifier: ^4.17.19
@@ -205,8 +205,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
 
-  '@phucbm/lerp@1.0.0':
-    resolution: {integrity: sha512-umo4dIE3tvHpmEXcg3r1aaLs6ncP/qixcb8KF3Xi+nvnhLT9eXzTvYSOmSf1TIpOBlOaBsZIOS6uD2heHnoh7w==}
+  '@phucbm/lerp@1.0.1':
+    resolution: {integrity: sha512-sVROm5chgbHAI8/Hv/coMMEuHKsRUOR8PEgj+W0u2cDWDqB4HCVMdzzQ5s+0nm8nO1cdntnUmKzaVtqbR58WNw==}
     engines: {node: '>=16'}
 
   '@pkgjs/parseargs@0.11.0':
@@ -822,7 +822,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
-  '@phucbm/lerp@1.0.0': {}
+  '@phucbm/lerp@1.0.1': {}
 
   '@pkgjs/parseargs@0.11.0':
     optional: true
