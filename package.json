@@ -1,6 +1,6 @@
 {
   "name": "@phucbm/magnetic-button",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A lightweight TypeScript library that creates smooth magnetic attraction effects for HTML elements",
   "type": "module",
   "main": "dist/index.js",

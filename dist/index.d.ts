@@ -1,10 +1,4 @@
 /**
- * Magnetic Button Effect
- * A lightweight TypeScript library that creates magnetic attraction effects for HTML elements
- * @version 1.0.0
- * @author Original by phucbm
- */
-/**
  * Configuration options for the magnetic button effect
  */
 interface MagneticButtonOptions {

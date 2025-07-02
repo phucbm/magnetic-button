@@ -1,16 +1,16 @@
 /*!
- * @phucbm/magnetic-button v0.0.3
- * A lightweight TypeScript library that creates smooth magnetic attraction effects for HTML elements
+ * @phucbm/magnetic-button 0.0.4
+ * https://phucbm.github.io/magnetic-button/
+ *
  * @license MIT
+ * @author: phucbm, https://github.com/phucbm
  */
-
 "use strict";
 var MagneticButton = (() => {
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
   var __getOwnPropNames = Object.getOwnPropertyNames;
   var __hasOwnProp = Object.prototype.hasOwnProperty;
-  var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
   var __export = (target, all) => {
     for (var name in all)
       __defProp(target, name, { get: all[name], enumerable: true });
@@ -24,7 +24,6 @@ var MagneticButton = (() => {
     return to;
   };
   var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
-  var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
 
   // src/umd.ts
   var umd_exports = {};
@@ -32,11 +31,11 @@ var MagneticButton = (() => {
     default: () => umd_default
   });
 
-  // node_modules/.pnpm/@phucbm+lerp@1.0.0/node_modules/@phucbm/lerp/dist/index.js
-  function lerp(start, end, fraction = 0.1) {
-    return start * (1 - fraction) + end * fraction;
+  // node_modules/.pnpm/@phucbm+lerp@1.0.1/node_modules/@phucbm/lerp/dist/index.js
+  function n(r, u, e = 0.1) {
+    return r * (1 - e) + u * e;
   }
-  var index_default = lerp;
+  var b = n;
 
   // src/index.ts
   var _MagneticButton = class _MagneticButton {
@@ -46,7 +45,7 @@ var MagneticButton = (() => {
      * @param options - Configuration options for the magnetic effect
      */
     constructor(target, options = {}) {
-      __publicField(this, "settings", {
+      this.settings = {
         activeClass: "magnetizing",
         attraction: 0.3,
         distance: 200,
@@ -57,9 +56,9 @@ var MagneticButton = (() => {
         },
         onUpdate: () => {
         }
-      });
-      __publicField(this, "isEnter", false);
-      __publicField(this, "lerpPos", { x: 0, y: 0 });
+      };
+      this.isEnter = false;
+      this.lerpPos = { x: 0, y: 0 };
       if (!target) {
         document.querySelectorAll("[data-magnetic]").forEach((element) => {
           if (!_MagneticButton.initializedElements.has(element)) {
@@ -116,8 +115,8 @@ var MagneticButton = (() => {
      * @param endY - Target Y position
      */
     animateButton(target, endX, endY) {
-      this.lerpPos.x = index_default(this.lerpPos.x, endX, this.settings.fraction);
-      this.lerpPos.y = index_default(this.lerpPos.y, endY, this.settings.fraction);
+      this.lerpPos.x = b(this.lerpPos.x, endX, this.settings.fraction);
+      this.lerpPos.y = b(this.lerpPos.y, endY, this.settings.fraction);
       target.style.transform = `translate(${this.lerpPos.x}px, ${this.lerpPos.y}px)`;
     }
     /**
@@ -138,7 +137,7 @@ var MagneticButton = (() => {
     }
   };
   // Track initialized elements to avoid duplicates
-  __publicField(_MagneticButton, "initializedElements", /* @__PURE__ */ new WeakSet());
+  _MagneticButton.initializedElements = /* @__PURE__ */ new WeakSet();
   var MagneticButton = _MagneticButton;
   if (typeof window !== "undefined" && typeof document !== "undefined") {
     if (document.readyState === "loading") {
@@ -165,9 +164,11 @@ var MagneticButton = (() => {
 
 @phucbm/lerp/dist/index.js:
   (*!
-   * @phucbm/lerp v1.0.0
-   * A lightweight TypeScript utility function for linear interpolation
+   * @phucbm/lerp 1.0.1
+   * https://github.com/phucbm/lerp#readme
+   *
    * @license MIT
+   * @author: phucbm, https://github.com/phucbm
    *)
 */
 //# sourceMappingURL=magnetic-button.js.map

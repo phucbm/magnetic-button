@@ -1,12 +1,10 @@
 /*!
- * @phucbm/magnetic-button v0.0.3
- * A lightweight TypeScript library that creates smooth magnetic attraction effects for HTML elements
+ * @phucbm/magnetic-button 0.0.4
+ * https://phucbm.github.io/magnetic-button/
+ *
  * @license MIT
+ * @author: phucbm, https://github.com/phucbm
  */
-
-var __defProp = Object.defineProperty;
-var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
 
 // src/index.ts
 import lerp from "@phucbm/lerp";
@@ -17,7 +15,7 @@ var _MagneticButton = class _MagneticButton {
    * @param options - Configuration options for the magnetic effect
    */
   constructor(target, options = {}) {
-    __publicField(this, "settings", {
+    this.settings = {
       activeClass: "magnetizing",
       attraction: 0.3,
       distance: 200,
@@ -28,9 +26,9 @@ var _MagneticButton = class _MagneticButton {
       },
       onUpdate: () => {
       }
-    });
-    __publicField(this, "isEnter", false);
-    __publicField(this, "lerpPos", { x: 0, y: 0 });
+    };
+    this.isEnter = false;
+    this.lerpPos = { x: 0, y: 0 };
     if (!target) {
       document.querySelectorAll("[data-magnetic]").forEach((element) => {
         if (!_MagneticButton.initializedElements.has(element)) {
@@ -109,7 +107,7 @@ var _MagneticButton = class _MagneticButton {
   }
 };
 // Track initialized elements to avoid duplicates
-__publicField(_MagneticButton, "initializedElements", /* @__PURE__ */ new WeakSet());
+_MagneticButton.initializedElements = /* @__PURE__ */ new WeakSet();
 var MagneticButton = _MagneticButton;
 if (typeof window !== "undefined" && typeof document !== "undefined") {
   if (document.readyState === "loading") {
