@@ -62,6 +62,7 @@
   },
   "sideEffects": false,
   "devDependencies": {
+    "@phucbm/banner": "^0.0.2",
     "@types/jest": "^30.0.0",
     "@types/lodash": "^4.17.19",
     "@types/node": "^24.0.3",

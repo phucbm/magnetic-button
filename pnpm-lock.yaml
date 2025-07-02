@@ -12,6 +12,9 @@ importers:
         specifier: ^1.0.1
         version: 1.0.1
     devDependencies:
+      '@phucbm/banner':
+        specifier: ^0.0.2
+        version: 0.0.2
       '@types/jest':
         specifier: ^30.0.0
         version: 30.0.0
@@ -524,6 +527,10 @@ packages:
 
   '@napi-rs/wasm-runtime@0.2.11':
     resolution: {integrity: sha512-9DPkXtvHydrcOsopiYpUgPHpmj0HWZKMUnL2dZqpvC42lsratuBG06V5ipyno0fUek5VlFsNQ+AcFATSrJXgMA==}
+
+  '@phucbm/banner@0.0.2':
+    resolution: {integrity: sha512-rgs5Q+dpnuHLXl4hK/rQkpaOoxX7EIwIIlRu8iTHX1am3pkI/7U1hbOeA7Q626bZgnk3MPJMOXsx4AByC/4fbg==}
+    engines: {node: '>=16'}
 
   '@phucbm/lerp@1.0.1':
     resolution: {integrity: sha512-sVROm5chgbHAI8/Hv/coMMEuHKsRUOR8PEgj+W0u2cDWDqB4HCVMdzzQ5s+0nm8nO1cdntnUmKzaVtqbR58WNw==}
@@ -2574,6 +2581,8 @@ snapshots:
       '@emnapi/runtime': 1.4.3
       '@tybys/wasm-util': 0.9.0
     optional: true
+
+  '@phucbm/banner@0.0.2': {}
 
   '@phucbm/lerp@1.0.1': {}
 
