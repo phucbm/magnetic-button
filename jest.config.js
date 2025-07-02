@@ -19,5 +19,8 @@ export default {
     ],
     coverageDirectory: 'coverage',
     coverageReporters: ['text', 'lcov', 'html'],
-    setupFilesAfterEnv: ['<rootDir>/tests/setup.ts'] // Optional: for custom test setup
+    setupFilesAfterEnv: ['<rootDir>/tests/setup.ts'], // Optional: for custom test setup
+    moduleNameMapper: {
+        '@phucbm/lerp': '<rootDir>/node_modules/@phucbm/lerp'
+    }
 };

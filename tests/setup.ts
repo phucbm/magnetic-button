@@ -1,6 +1,13 @@
 // Test setup for DOM testing
 // This file runs before each test file
 
+// Mock the lerp function
+jest.mock('@phucbm/lerp', () => {
+    return jest.fn((start: number, end: number, fraction: number) => {
+        return start + (end - start) * fraction;
+    });
+});
+
 // Mock window.matchMedia for responsive design testing
 Object.defineProperty(window, 'matchMedia', {
     writable: true,
@@ -54,3 +61,17 @@ global.requestAnimationFrame = (callback: FrameRequestCallback) => {
 global.cancelAnimationFrame = (id: number) => {
     clearTimeout(id);
 };
+
+// Mock getBoundingClientRect
+Element.prototype.getBoundingClientRect = jest.fn(() => ({
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
+    width: 100,
+    height: 50,
+    x: 0,
+    y: 0,
+    toJSON: () => {
+    }
+}));

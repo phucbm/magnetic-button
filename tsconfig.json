@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES2022",
+    "target": "ES2020",
     "module": "ESNext",
     "moduleResolution": "bundler",
     "esModuleInterop": true,
@@ -13,19 +13,12 @@
     "rootDir": "./src",
     "declaration": true,
     "sourceMap": true,
-    "isolatedModules": true,
-    "lib": [
-      "ES2020",
-      "DOM",
-      "DOM.Iterable"
-    ]
+    "isolatedModules": true
   },
   "include": [
     "src/**/*",
     "tests/**/*",
-    "tsup.config.ts",
-    "node_modules/.pnpm/@types+node@24.0.8/node_modules/@types/node/globals.d.ts",
-    "node_modules/.pnpm/@types+node@24.0.8/node_modules/@types/node/globals.d.ts"
+    "tsup.config.ts"
   ],
   "exclude": [
     "node_modules",

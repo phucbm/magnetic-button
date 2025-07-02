@@ -43,6 +43,8 @@ describe('MagneticButton', () => {
     // Test 1: Initialization
     describe('Initialization', () => {
         it('should initialize with correct settings and add is-magnetized class', () => {
+            new MagneticButton(element);
+
             expect(element.classList.contains('is-magnetized')).toBe(true);
             expect(window.addEventListener).toHaveBeenCalledWith('mousemove', expect.any(Function));
         });
@@ -126,7 +128,6 @@ describe('MagneticButton', () => {
     // Test 4: Transform Application
     describe('Transform Application', () => {
         it('should apply CSS transform based on mouse position and return to origin', () => {
-
             new MagneticButton(element, {attraction: 0.5, fraction: 0.2});
 
             // Mouse near element should apply transform
@@ -137,7 +138,7 @@ describe('MagneticButton', () => {
 
             mouseMoveEvent(mouseEvent);
 
-            // Should call lerp for smooth animation
+            // Should apply transform
             expect(element.style.transform).toContain('translate');
 
             // Mouse far away should reset to origin
