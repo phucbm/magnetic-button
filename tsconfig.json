@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES2022",
+    "target": "ES2020",
     "module": "ESNext",
     "moduleResolution": "bundler",
     "esModuleInterop": true,
@@ -13,11 +13,11 @@
     "rootDir": "./src",
     "declaration": true,
     "sourceMap": true,
-    "allowImportingTsExtensions": false,
     "isolatedModules": true
   },
   "include": [
     "src/**/*",
+    "tests/**/*",
     "tsup.config.ts"
   ],
   "exclude": [

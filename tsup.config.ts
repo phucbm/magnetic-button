@@ -1,6 +1,7 @@
 import {defineConfig} from 'tsup';
 import _ from 'lodash';
 import pkg from './package.json';
+import {generateBanner} from "@phucbm/banner";
 
 // Extract the package name without namespace
 const getPackageName = (fullName: string): string => {
@@ -10,12 +11,7 @@ const getPackageName = (fullName: string): string => {
 const packageName = getPackageName(pkg.name);
 const globalName = _.upperFirst(_.camelCase(packageName));
 
-const banner = `/*!
- * ${pkg.name} v${pkg.version}
- * ${pkg.description}
- * @license ${pkg.license}
- */
-`;
+const banner = generateBanner(pkg);
 
 export default defineConfig([
     // ESM build
