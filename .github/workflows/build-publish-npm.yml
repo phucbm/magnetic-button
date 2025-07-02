@@ -1,4 +1,4 @@
-name: Publish on Release
+name: Build and Publish NPM package on release
 
 on:
   release:
@@ -20,7 +20,7 @@ jobs:
           fetch-depth: 0  # Fetch all history
 
       - name: Publish NPM Package
-        uses: phucbm/publish-npm-action@v1  # Docs https://github.com/phucbm/publish-npm-action
+        uses: phucbm/publish-npm-action@v1 # Docs https://github.com/phucbm/publish-npm-action
         with:
           npm-token: ${{ secrets.NPM_TOKEN }}
           # github-token: ${{ secrets.CUSTOM_TOKEN }}        # Custom GitHub token, default is ${{ github.token }}
