@@ -2,7 +2,18 @@ name: Dependabot Release
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
+  workflow_dispatch: # Enables manual trigger via GitHub web
+    inputs:
+      version-bump:
+        description: 'Version bump type'
+        required: false
+        default: 'patch'
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
 
 permissions:
   contents: write  # To create tags and releases
@@ -14,4 +25,5 @@ jobs:
       - name: Dependabot Release
         uses: phucbm/dependabot-release-action@v1 #https://github.com/marketplace/actions/dependabot-release-action
         with:
-          version-bump: 'patch'  # Always patch for dependency updates
+          version-bump: ${{ github.event.inputs.version-bump || 'patch' }}  # Use manual input or default to patch
+          default-branch: 'main'   # Set your default branch name
