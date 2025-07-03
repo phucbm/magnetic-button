@@ -19,4 +19,4 @@ jobs:
       - name: Test and merge PR # https://github.com/marketplace/actions/test-pr-action
         uses: phucbm/test-pr-action@v1
         with:
-          dependabot-auto-merge: 'true'  # Optional: auto-merge Dependabot PRs
+          dependabot-auto-merge: 'false'  # Optional: auto-merge Dependabot PRs

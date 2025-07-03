@@ -24,7 +24,6 @@ jobs:
         uses: phucbm/publish-npm-action@v1 # Docs https://github.com/phucbm/publish-npm-action
         with:
           npm-token: ${{ secrets.NPM_TOKEN }}
-          skip-tests: ${{ github.event.inputs.skip-tests || 'false' }}
           # github-token: ${{ secrets.CUSTOM_TOKEN }}        # Custom GitHub token, default is ${{ github.token }}
           # node-version: '20'                               # Node.js version, default is '18'
           # pnpm-version: '9'                                # PNPM version, default is '8'
