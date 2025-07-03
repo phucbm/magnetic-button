@@ -1,5 +1,5 @@
 /*!
- * @phucbm/magnetic-button 0.0.5
+ * @phucbm/magnetic-button 0.0.6
  * https://phucbm.github.io/magnetic-button/
  *
  * @license MIT
