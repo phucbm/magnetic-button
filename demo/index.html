@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Magnetic Button Demo</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧲</text></svg>">
     <style>
         * {
             margin: 0;
@@ -13,139 +14,118 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #0a0a0a;
-            color: #ffffff;
+            background: #f5f5f7;
+            color: #1d1d1f;
             min-height: 100vh;
-            padding: 2rem;
+            padding: 2rem 1rem;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 900px;
             margin: 0 auto;
         }
 
         h1 {
             text-align: center;
-            margin-bottom: 3rem;
-            font-size: 3rem;
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .demo-section {
-            margin-bottom: 4rem;
-        }
-
-        .demo-section h2 {
             margin-bottom: 2rem;
-            color: #8b8b8b;
-            font-size: 1.5rem;
+            font-size: 2rem;
+            font-weight: 600;
+            color: #1d1d1f;
         }
 
-        .buttons-grid {
+        .demo-layout {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 3rem;
-            margin-bottom: 3rem;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: start;
         }
 
-        .button-demo {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .magnetic-btn {
-            padding: 1rem 2rem;
-            border: 2px solid #333;
-            background: #1a1a1a;
-            color: #ffffff;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 500;
-            transition: border-color 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .magnetic-btn:hover {
-            border-color: #555;
-        }
-
-        .magnetic-btn.magnetizing {
-            border-color: #ff6b6b;
-            box-shadow: 0 0 20px rgba(255, 107, 107, 0.3);
-        }
-
-        .magnetic-btn.style-gradient {
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
-            border: none;
-        }
-
-        .magnetic-btn.style-outline {
-            background: transparent;
-            border: 2px solid #4ecdc4;
-            color: #4ecdc4;
-        }
-
-        .magnetic-btn.style-outline.magnetizing {
-            border-color: #ffffff;
-            color: #ffffff;
-            box-shadow: 0 0 20px rgba(76, 205, 196, 0.3);
-        }
-
-        .magnetic-btn.style-large {
-            padding: 2rem 3rem;
-            font-size: 1.2rem;
+        .controls-panel {
+            background: #ffffff;
             border-radius: 12px;
-        }
-
-        .config-info {
-            font-size: 0.875rem;
-            color: #666;
-            text-align: center;
-            font-family: 'Monaco', 'Consolas', monospace;
-        }
-
-        .controls {
-            background: #1a1a1a;
             padding: 2rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .demo-panel {
+            background: #ffffff;
             border-radius: 12px;
-            margin-bottom: 3rem;
+            padding: 3rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .controls h3 {
+        .section {
+            margin-bottom: 2rem;
+        }
+
+        .section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #86868b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
             margin-bottom: 1rem;
+        }
+
+        .style-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .style-btn {
+            padding: 0.5rem 1rem;
+            border: 2px solid #e5e5e7;
+            background: #ffffff;
+            color: #1d1d1f;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .style-btn:hover {
+            border-color: #0071e3;
+            background: #f0f7ff;
+        }
+
+        .style-btn.active {
+            border-color: #0071e3;
+            background: #0071e3;
             color: #ffffff;
-        }
-
-        .control-group {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-bottom: 1rem;
         }
 
         .control {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .control:last-child {
+            margin-bottom: 0;
         }
 
         .control label {
-            font-size: 0.875rem;
-            color: #8b8b8b;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8125rem;
+            color: #1d1d1f;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
         }
 
         .control input[type="range"] {
             width: 100%;
             height: 4px;
             border-radius: 2px;
-            background: #333;
+            background: #e5e5e7;
             outline: none;
             -webkit-appearance: none;
         }
@@ -153,60 +133,186 @@
         .control input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
-            width: 16px;
-            height: 16px;
+            width: 18px;
+            height: 18px;
             border-radius: 50%;
-            background: #4ecdc4;
+            background: #0071e3;
             cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .control input[type="range"]::-moz-range-thumb {
-            width: 16px;
-            height: 16px;
+            width: 18px;
+            height: 18px;
             border-radius: 50%;
-            background: #4ecdc4;
+            background: #0071e3;
             cursor: pointer;
             border: none;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .value-display {
+            font-weight: 600;
+            color: #0071e3;
+            font-size: 0.8125rem;
+        }
+
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+        }
+
+        .toggle-label {
             font-size: 0.875rem;
-            color: #4ecdc4;
             font-weight: 500;
+            color: #1d1d1f;
         }
 
-        .code-example {
-            background: #0d1117;
-            border: 1px solid #30363d;
-            border-radius: 8px;
-            padding: 1rem;
-            font-family: 'Monaco', 'Consolas', monospace;
-            font-size: 0.875rem;
-            color: #c9d1d9;
-            overflow-x: auto;
+        .toggle-switch {
+            position: relative;
+            width: 48px;
+            height: 28px;
+            background: #e5e5e7;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: background 0.3s ease;
         }
 
-        .info-panel {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: rgba(26, 26, 26, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 1rem;
-            border-radius: 8px;
-            border: 1px solid #333;
+        .toggle-switch.active {
+            background: #0071e3;
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 22px;
+            height: 22px;
+            background: #ffffff;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .toggle-switch.active::after {
+            transform: translateX(20px);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 0.75rem;
+            border: 2px solid #e5e5e7;
+            background: #ffffff;
+            color: #1d1d1f;
+            border-radius: 6px;
+            cursor: pointer;
             font-size: 0.875rem;
-            color: #8b8b8b;
-            max-width: 200px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .action-btn.btn-destroy {
+            background: #ff3b30;
+            border-color: #ff3b30;
+            color: #ffffff;
+        }
+
+        .action-btn.btn-destroy:hover {
+            background: #ff453a;
+            border-color: #ff453a;
+        }
+
+        .action-btn.btn-success {
+            background: #34c759;
+            border-color: #34c759;
+            color: #ffffff;
+        }
+
+        .action-btn.btn-success:hover {
+            background: #30d158;
+            border-color: #30d158;
+        }
+
+        .magnetic-wrapper {
+            display: inline-block;
+            position: relative;
+        }
+
+        .magnetic-wrapper.debug-area::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 2px dashed rgba(0, 113, 227, 0.3);
+            border-radius: 12px;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .magnetic-wrapper.debug-area.show-debug::after {
+            opacity: 1;
+        }
+
+        .magnetic-btn {
+            padding: 1.25rem 2.5rem;
+            border: 2px solid #e5e5e7;
+            background: #ffffff;
+            color: #1d1d1f;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1.125rem;
+            font-weight: 600;
+            transition: border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .magnetic-btn:hover {
+            border-color: #0071e3;
+            box-shadow: 0 4px 12px rgba(0, 113, 227, 0.15);
+        }
+
+        .magnetic-btn.magnetizing {
+            border-color: #0071e3;
+            box-shadow: 0 6px 20px rgba(0, 113, 227, 0.25);
+            background: #f0f7ff;
+        }
+
+        .info-text {
+            font-size: 0.8125rem;
+            color: #86868b;
+            margin-top: 1rem;
+            line-height: 1.5;
+        }
+
+        .divider {
+            height: 1px;
+            background: #e5e5e7;
+            margin: 1.5rem 0;
         }
 
         @media (max-width: 768px) {
-            .info-panel {
-                position: relative;
-                top: auto;
-                right: auto;
-                margin-bottom: 2rem;
-                max-width: none;
+            .demo-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .demo-panel {
+                min-height: 300px;
             }
         }
     </style>
@@ -215,106 +321,81 @@
 <div class="container">
     <h1>Magnetic Button Demo</h1>
 
-    <div class="info-panel">
-        <strong>Live Development</strong><br>
-        Edit the TypeScript source and see changes instantly with HMR!
-    </div>
-
-    <div class="demo-section">
-        <h2>Basic Examples</h2>
-        <div class="buttons-grid">
-            <div class="button-demo">
-                <button class="magnetic-btn" data-magnetic>
-                    Default Settings
-                </button>
-                <div class="config-info">
-                    data-magnetic
+    <div class="demo-layout">
+        <!-- Left Panel: Controls -->
+        <div class="controls-panel">
+            <!-- Style Presets -->
+            <div class="section">
+                <div class="section-title">Presets</div>
+                <div class="style-buttons">
+                    <button class="style-btn active" data-style="default">Default</button>
+                    <button class="style-btn" data-style="strong">Strong Attraction</button>
+                    <button class="style-btn" data-style="quick">Quick & Subtle</button>
                 </div>
             </div>
 
-            <div class="button-demo">
-                <button class="magnetic-btn style-gradient" data-magnetic data-distance="120" data-attraction="0.2">
-                    Strong Attraction
-                </button>
-                <div class="config-info">
-                    distance="120" attraction="0.2"
-                </div>
-            </div>
+            <div class="divider"></div>
 
-            <div class="button-demo">
-                <button class="magnetic-btn style-outline" data-magnetic data-distance="80" data-attraction="0.8" data-fraction="0.05">
-                    Quick & Subtle
-                </button>
-                <div class="config-info">
-                    distance="80" attraction="0.8" fraction="0.05"
-                </div>
-            </div>
-
-            <div class="button-demo">
-                <button class="magnetic-btn style-large" data-magnetic data-distance="200" data-attraction="0.1" data-fraction="0.2">
-                    Large Range
-                </button>
-                <div class="config-info">
-                    distance="200" attraction="0.1" fraction="0.2"
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="demo-section">
-        <h2>Interactive Controls</h2>
-        <div class="controls">
-            <h3>Adjust Parameters Live</h3>
-            <div class="control-group">
+            <!-- Parameters -->
+            <div class="section">
+                <div class="section-title">Parameters</div>
                 <div class="control">
-                    <label for="distance">Distance: <span class="value-display" id="distance-value">150</span>px</label>
-                    <input type="range" id="distance" min="50" max="300" value="150">
+                    <label>
+                        <span>Distance</span>
+                        <span class="value-display" id="distance-value">50px</span>
+                    </label>
+                    <input type="range" id="distance" min="10" max="300" value="50">
+                    <p class="info-text" style="margin-top: 0.5rem; margin-bottom: 0;">Range of the magnetic effect from element edges</p>
                 </div>
                 <div class="control">
-                    <label for="attraction">Attraction: <span class="value-display" id="attraction-value">0.3</span></label>
+                    <label>
+                        <span>Attraction</span>
+                        <span class="value-display" id="attraction-value">0.3</span>
+                    </label>
                     <input type="range" id="attraction" min="0" max="1" step="0.1" value="0.3">
+                    <p class="info-text" style="margin-top: 0.5rem; margin-bottom: 0;">Strength of the pull (0 = weak, 1 = strong)</p>
                 </div>
                 <div class="control">
-                    <label for="fraction">Speed: <span class="value-display" id="fraction-value">0.1</span></label>
-                    <input type="range" id="fraction" min="0.01" max="0.5" step="0.01" value="0.1">
+                    <label>
+                        <span>Fraction</span>
+                        <span class="value-display" id="fraction-value">0.1</span>
+                    </label>
+                    <input type="range" id="fraction" min="0" max="1" step="0.1" value="0.1">
+                    <p class="info-text" style="margin-top: 0.5rem; margin-bottom: 0;">Animation speed (0 = slow, 1 = instant)</p>
                 </div>
             </div>
-            <button class="magnetic-btn" id="controlled-btn" data-magnetic data-distance="150" data-attraction="0.3" data-fraction="0.1">
-                Controlled Button
-            </button>
+
+            <div class="divider"></div>
+
+            <!-- Debug Toggle -->
+            <div class="section">
+                <div class="section-title">Debug</div>
+                <div class="toggle-container">
+                    <span class="toggle-label">Show Magnetic Area</span>
+                    <div class="toggle-switch active" id="debug-toggle"></div>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- API Controls -->
+            <div class="section">
+                <div class="section-title">API Methods</div>
+                <div class="action-buttons">
+                    <button class="action-btn btn-destroy" id="destroy-btn">Destroy</button>
+                    <button class="action-btn btn-success" id="reinit-btn">Reinitialize</button>
+                </div>
+                <p class="info-text" id="api-status">Instance active</p>
+            </div>
         </div>
-    </div>
 
-    <div class="demo-section">
-        <h2>Usage Examples</h2>
-        <div class="code-example">
-            &lt;!-- Basic usage --&gt;
-            &lt;button data-magnetic&gt;Hover me!&lt;/button&gt;
-
-            &lt;!-- With custom parameters --&gt;
-            &lt;button
-            data-magnetic
-            data-distance="150"
-            data-attraction="0.3"
-            data-fraction="0.2"&gt;
-            Custom magnetic button
-            &lt;/button&gt;
-
-            &lt;!-- Programmatic usage --&gt;
-            &lt;script&gt;
-            import { MagneticButton } from '@phucbm/magnetic-button';
-
-            // Auto-initialize all elements with data-magnetic
-            new MagneticButton();
-
-            // Or target specific element
-            const button = document.querySelector('.my-button');
-            new MagneticButton(button, {
-            distance: 200,
-            attraction: 0.5,
-            onEnter: (data) => console.log('Magnetized!', data)
-            });
-            &lt;/script&gt;
+        <!-- Right Panel: Demo Button -->
+        <div class="demo-panel">
+            <div class="magnetic-wrapper debug-area show-debug" id="demo-wrapper">
+                <button class="magnetic-btn" id="demo-btn">
+                    Hover Me
+                </button>
+            </div>
         </div>
     </div>
 </div>
