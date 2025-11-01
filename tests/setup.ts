@@ -3,8 +3,8 @@
 
 // Mock the lerp function
 jest.mock('@phucbm/lerp', () => {
-    return jest.fn((start: number, end: number, fraction: number) => {
-        return start + (end - start) * fraction;
+    return jest.fn((start: number, end: number, speed: number) => {
+        return start + (end - start) * speed;
     });
 });
 
