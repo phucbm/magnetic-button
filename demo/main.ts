@@ -9,14 +9,14 @@ const presets = {
         fraction: 0.1
     },
     strong: {
-        distance: 100,
-        attraction: 0.8,
-        fraction: 0.1
+        distance: 120,
+        attraction: 0.2,
+        fraction: 0.15
     },
     quick: {
         distance: 80,
-        attraction: 0.5,
-        fraction: 0.5
+        attraction: 0.8,
+        fraction: 0.05
     }
 }
 
@@ -34,7 +34,6 @@ const fractionValue = document.getElementById('fraction-value')!
 const debugToggle = document.getElementById('debug-toggle')!
 const destroyBtn = document.getElementById('destroy-btn') as HTMLElement
 const reinitBtn = document.getElementById('reinit-btn') as HTMLElement
-const apiStatus = document.getElementById('api-status')!
 const styleButtons = document.querySelectorAll('.style-btn')
 
 // State
@@ -61,6 +60,12 @@ function updateDebugArea(distance: number) {
         }
     `
     document.head.appendChild(style)
+
+    // Update area display position - 10px below the debug area
+    const areaDisplay = document.getElementById('area-display')!
+    const offsetFromTop = (areaHeight / 2) + 10
+    areaDisplay.style.top = `${offsetFromTop}px`
+    areaDisplay.textContent = `Area: ${areaWidth}px × ${areaHeight}px`
 }
 
 // Update display values
@@ -93,10 +98,6 @@ function reinitMagnetic(distance: number, attraction: number, fraction: number) 
 
     // Update debug area
     updateDebugArea(distance)
-
-    // Update API status
-    apiStatus.textContent = 'Instance active'
-    apiStatus.style.color = '#34c759'
 }
 
 // Initialize demo
@@ -166,8 +167,6 @@ destroyBtn.addEventListener('click', () => {
     if (demoInstance) {
         demoInstance.destroy()
         demoInstance = null
-        apiStatus.textContent = 'Instance destroyed'
-        apiStatus.style.color = '#ff3b30'
     }
 })
 
