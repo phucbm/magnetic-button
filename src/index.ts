@@ -6,11 +6,11 @@ import lerp from "@phucbm/lerp";
 export interface MagneticButtonOptions {
     /** CSS class added when the magnetic effect is active */
     activeClass?: string;
-    /** Controls the strength of the magnetic pull (0 = strong, 1 = weak) */
+    /** Controls the strength of the magnetic pull (0 = weak, 1 = strong) */
     attraction?: number;
     /** Defines the range within which the magnetic effect is active (in pixels) */
     distance?: number;
-    /** Controls the speed of the magnetic movement (0 = instant, 1 = slow) */
+    /** Controls the speed of the magnetic movement (0 = slow, 1 = instant) */
     fraction?: number;
     /** Callback fired when mouse enters the magnetic area */
     onEnter?: (data: MagneticData) => void;
@@ -65,7 +65,7 @@ export class MagneticButton {
     private readonly settings: Required<MagneticButtonOptions> = {
         activeClass: 'magnetizing',
         attraction: 0.3,
-        distance: 200,
+        distance: 50,
         fraction: 0.1,
         onEnter: () => {
         },
