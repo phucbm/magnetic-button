@@ -21,7 +21,9 @@ interaction.
 - **Auto-initialization** - Works with data attributes out of the box
 - **Customizable** - Fine-tune distance, attraction, and animation speed
 - **Smooth animations** - Uses linear interpolation for buttery smooth movement
+- **Touch device detection** - Automatically disabled on touch devices by default
 - **Event callbacks** - Hook into enter, exit, and update events
+- **API methods** - Programmatically control instances with `destroy()` and `getMagnetizedArea()`
 - **Modern browsers** - Works in all modern browsers that support ES2022
 
 ## 🚀 Demo
@@ -129,13 +131,21 @@ new MagneticButton()
 
 // Or target a specific element
 const button = document.querySelector('.my-button')
-new MagneticButton(button, {
+const instance = new MagneticButton(button, {
     distance: 200,
     attraction: 0.5,
     fraction: 0.1,
+    disableOnTouch: true,
     onEnter: (data) => console.log('Magnetized!', data),
     onExit: (data) => console.log('Released!', data)
 })
+
+// Get magnetized area dimensions
+const area = instance.getMagnetizedArea()
+console.log(area) // { width: 300, height: 200 }
+
+// Destroy instance and clean up
+instance.destroy()
 ```
 
 ## ⚙️ Configuration Options
@@ -144,26 +154,27 @@ new MagneticButton(button, {
 
 Add these attributes to your HTML elements to customize the magnetic effect:
 
-| Attribute         | Type     | Default | Description                                               |
-|-------------------|----------|---------|-----------------------------------------------------------|
-| `data-magnetic`   | -        | -       | **Required**. Enables magnetic effect on the element      |
-| `data-distance`   | `number` | `200`   | Range within which the magnetic effect is active (pixels) |
-| `data-attraction` | `number` | `0.3`   | Strength of magnetic pull (0 = strong, 1 = weak)          |
-| `data-fraction`   | `number` | `0.1`   | Speed of magnetic movement (0 = instant, 1 = slow)        |
+| Attribute         | Type     | Default | Description                                                 |
+|-------------------|----------|---------|-------------------------------------------------------------|
+| `data-magnetic`   | -        | -       | **Required**. Enables magnetic effect on the element        |
+| `data-distance`   | `number` | `50`    | Range from element edges where effect is active (pixels)    |
+| `data-attraction` | `number` | `0.3`   | Strength of magnetic pull (0 = weak, 1 = strong)            |
+| `data-fraction`   | `number` | `0.1`   | Speed of magnetic movement (0 = slow, 1 = instant)          |
 
 ### JavaScript Options
 
 When initializing with JavaScript, you can pass these options:
 
-| Option        | Type       | Default         | Description                                           |
-|---------------|------------|-----------------|-------------------------------------------------------|
-| `activeClass` | `string`   | `'magnetizing'` | CSS class added when magnetic effect is active        |
-| `attraction`  | `number`   | `0.3`           | Strength of magnetic pull (0 = strong, 1 = weak)      |
-| `distance`    | `number`   | `200`           | Range within which magnetic effect is active (pixels) |
-| `fraction`    | `number`   | `0.1`           | Speed of magnetic movement (0 = instant, 1 = slow)    |
-| `onEnter`     | `function` | `() => {}`      | Callback fired when mouse enters magnetic area        |
-| `onExit`      | `function` | `() => {}`      | Callback fired when mouse exits magnetic area         |
-| `onUpdate`    | `function` | `() => {}`      | Callback fired continuously while in magnetic area    |
+| Option           | Type       | Default         | Description                                                    |
+|------------------|------------|-----------------|----------------------------------------------------------------|
+| `activeClass`    | `string`   | `'magnetizing'` | CSS class added when magnetic effect is active                 |
+| `attraction`     | `number`   | `0.3`           | Strength of magnetic pull (0 = weak, 1 = strong)               |
+| `distance`       | `number`   | `50`            | Range from element edges where effect is active (pixels)       |
+| `fraction`       | `number`   | `0.1`           | Speed of magnetic movement (0 = slow, 1 = instant)             |
+| `disableOnTouch` | `boolean`  | `true`          | Disable magnetic effect on touch devices                       |
+| `onEnter`        | `function` | `() => {}`      | Callback fired when mouse enters magnetic area                 |
+| `onExit`         | `function` | `() => {}`      | Callback fired when mouse exits magnetic area                  |
+| `onUpdate`       | `function` | `() => {}`      | Callback fired continuously while in magnetic area             |
 
 ## 🎭 CSS Classes
 
@@ -188,15 +199,45 @@ new MagneticButton(target ? : HTMLElement | null, options ? : MagneticButtonOpti
   with `data-magnetic` attribute
 - `options` - Configuration options (see table above)
 
+### Methods
+
+#### `getMagnetizedArea()`
+
+Returns the total magnetized area dimensions including the distance parameter.
+
+```typescript
+const area = instance.getMagnetizedArea()
+console.log(area) // { width: 300, height: 250 }
+```
+
+**Returns:** `{ width: number, height: number }`
+
+- For an element with dimensions 100×50px and distance=100px
+- Total magnetized area will be: (100 + 100×2) × (50 + 100×2) = 300×250px
+
+#### `destroy()`
+
+Destroys the magnetic button instance and cleans up all event listeners.
+
+```typescript
+instance.destroy()
+```
+
+This method:
+- Removes event listeners
+- Cleans up CSS classes
+- Resets element transform
+- Removes instance from tracking
+
 ### Event Data
 
 Callback functions receive a `MagneticData` object with the following properties:
 
-| Property   | Type     | Description                               |
-|------------|----------|-------------------------------------------|
-| `deltaX`   | `number` | Horizontal offset from element center     |
-| `deltaY`   | `number` | Vertical offset from element center       |
-| `distance` | `number` | Distance between mouse and element center |
+| Property   | Type     | Description                                      |
+|------------|----------|--------------------------------------------------|
+| `deltaX`   | `number` | Horizontal offset from element center            |
+| `deltaY`   | `number` | Vertical offset from element center              |
+| `distance` | `number` | Distance from mouse to nearest element edge      |
 
 ## 🎨 Examples
 
@@ -204,7 +245,7 @@ Callback functions receive a `MagneticData` object with the following properties
 
 ```html
 
-<button data-magnetic data-distance="120" data-attraction="0.1">
+<button data-magnetic data-distance="120" data-attraction="0.2">
     Strong Pull
 </button>
 ```
@@ -222,7 +263,7 @@ Callback functions receive a `MagneticData` object with the following properties
 
 ```html
 
-<button data-magnetic data-distance="300" data-attraction="0.4">
+<button data-magnetic data-distance="200" data-attraction="0.4">
     Wide Range
 </button>
 ```
@@ -230,7 +271,7 @@ Callback functions receive a `MagneticData` object with the following properties
 ### With Event Callbacks
 
 ```typescript
-new MagneticButton(document.querySelector('.special-btn'), {
+const instance = new MagneticButton(document.querySelector('.special-btn'), {
     distance: 150,
     attraction: 0.3,
     onEnter: (data) => {
@@ -250,12 +291,31 @@ new MagneticButton(document.querySelector('.special-btn'), {
 })
 ```
 
+### Enable on Touch Devices
+
+By default, the magnetic effect is disabled on touch devices. To enable it:
+
+```typescript
+new MagneticButton(element, {
+    disableOnTouch: false // Enable on touch devices
+})
+```
+
 ## 🎯 Tips and Best Practices
 
 ### Performance
 
-- The library is optimized and uses `requestAnimationFrame` internally
+- The library is optimized and uses linear interpolation for smooth animations
 - Avoid initializing too many magnetic elements simultaneously (recommended max: ~20-30)
+- The effect is automatically disabled on touch devices by default for better performance
+
+### Distance Calculation
+
+The `distance` parameter defines the range from the **element's edges** (not center):
+
+- Element size: 100px × 50px
+- Distance: 100px
+- **Total magnetized area**: 300px × 250px (element + distance on all sides)
 
 ### CSS Styling
 
@@ -271,15 +331,30 @@ new MagneticButton(document.querySelector('.special-btn'), {
     box-shadow:0 0 20px rgba(255, 107, 107, 0.3);
 }
 
-/* Ensure transform doesn't interfere with other transforms */
+/* Important: Avoid adding transition to transform */
 .magnetic-btn {
-    transform-origin:center;
+    /* DON'T: transition: transform 0.3s; */
+    /* This will conflict with the magnetic effect */
 }
 ```
 
+### Best Practice: Wrap Elements
+
+For best results, wrap your buttons in a container and apply the magnetic effect to the wrapper:
+
+```html
+<div class="magnetic-wrapper" data-magnetic>
+    <button class="my-button">
+        Hover Me
+    </button>
+</div>
+```
+
+This prevents CSS transitions on the button from interfering with the magnetic transform.
+
 ### Accessibility
 
-The magnetic effect doesn't interfere with keyboard navigation or screen readers, making it accessible by default.
+The magnetic effect doesn't interfere with keyboard navigation or screen readers, making it accessible by default. It's also automatically disabled on touch devices where the hover effect wouldn't work properly.
 
 ### Framework Integration
 
@@ -291,12 +366,18 @@ import {MagneticButton} from '@phucbm/magnetic-button'
 
 function MyButton(){
     const buttonRef = useRef(null)
+    const instanceRef = useRef(null)
 
     useEffect(() => {
-        const magnetic = new MagneticButton(buttonRef.current, {
+        instanceRef.current = new MagneticButton(buttonRef.current, {
             distance: 150,
             attraction: 0.3
         })
+
+        // Cleanup on unmount
+        return () => {
+            instanceRef.current?.destroy()
+        }
     }, [])
 
     return <button ref={buttonRef}>Magnetic Button</button>
@@ -312,16 +393,21 @@ function MyButton(){
 </template>
 
 <script setup>
-  import {ref, onMounted} from 'vue'
+  import {ref, onMounted, onUnmounted} from 'vue'
   import {MagneticButton} from '@phucbm/magnetic-button'
 
   const buttonRef = ref(null)
+  let instance = null
 
   onMounted(() => {
-    new MagneticButton(buttonRef.value, {
+    instance = new MagneticButton(buttonRef.value, {
       distance: 150,
       attraction: 0.3
     })
+  })
+
+  onUnmounted(() => {
+    instance?.destroy()
   })
 </script>
 ```
