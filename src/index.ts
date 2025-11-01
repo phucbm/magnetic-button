@@ -11,7 +11,7 @@ export interface MagneticButtonOptions {
     /** Defines the range within which the magnetic effect is active (in pixels) */
     distance?: number;
     /** Controls the speed of the magnetic movement (0 = slow, 1 = instant) */
-    fraction?: number;
+    speed?: number;
     /** Disable magnetic effect on touch devices (default: true) */
     disableOnTouch?: boolean;
     /** Callback fired when mouse enters the magnetic area */
@@ -47,7 +47,7 @@ interface LerpPosition {
  *
  * Usage:
  * ```html
- * <button data-magnetic data-distance="150" data-attraction="0.3" data-fraction="0.2">
+ * <button data-magnetic data-distance="150" data-attraction="0.3" data-speed="0.2">
  *   Hover me!
  * </button>
  * ```
@@ -68,7 +68,7 @@ export class MagneticButton {
         activeClass: 'magnetizing',
         attraction: 0.3,
         distance: 50,
-        fraction: 0.1,
+        speed: 0.1,
         disableOnTouch: true,
         onEnter: () => {
         },
@@ -122,14 +122,14 @@ export class MagneticButton {
         // Extract and validate data attributes
         const dataDistance = parseFloat(target.getAttribute('data-distance') || '');
         const dataAttraction = parseFloat(target.getAttribute('data-attraction') || '');
-        const dataFraction = parseFloat(target.getAttribute('data-fraction') || '');
+        const dataSpeed = parseFloat(target.getAttribute('data-speed') || '');
 
         // Merge default settings with options and data attributes
         this.settings = {
             ...this.settings,
             attraction: !isNaN(dataAttraction) ? dataAttraction : options.attraction ?? this.settings.attraction,
             distance: !isNaN(dataDistance) ? dataDistance : options.distance ?? this.settings.distance,
-            fraction: !isNaN(dataFraction) ? dataFraction : options.fraction ?? this.settings.fraction,
+            speed: !isNaN(dataSpeed) ? dataSpeed : options.speed ?? this.settings.speed,
             ...options,
         };
 
@@ -190,8 +190,8 @@ export class MagneticButton {
      */
     private animateButton(target: HTMLElement, endX: number, endY: number): void {
         // Get interpolated position values
-        this.lerpPos.x = lerp(this.lerpPos.x, endX, this.settings.fraction);
-        this.lerpPos.y = lerp(this.lerpPos.y, endY, this.settings.fraction);
+        this.lerpPos.x = lerp(this.lerpPos.x, endX, this.settings.speed);
+        this.lerpPos.y = lerp(this.lerpPos.y, endY, this.settings.speed);
 
         // Apply transform
         target.style.transform = `translate(${this.lerpPos.x}px, ${this.lerpPos.y}px)`;

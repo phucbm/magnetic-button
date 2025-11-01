@@ -107,7 +107,7 @@ yarn add @phucbm/magnetic-button
         data-magnetic
         data-distance="150"
         data-attraction="0.3"
-        data-fraction="0.2">
+        data-speed="0.2">
     Custom magnetic button
 </button>
 
@@ -133,7 +133,7 @@ const button = document.querySelector('.my-button')
 const instance = new MagneticButton(button, {
     distance: 200,
     attraction: 0.5,
-    fraction: 0.1,
+    speed: 0.1,
     disableOnTouch: true,
     onEnter: (data) => console.log('Magnetized!', data),
     onExit: (data) => console.log('Released!', data)
@@ -158,7 +158,7 @@ Add these attributes to your HTML elements to customize the magnetic effect:
 | `data-magnetic`   | -        | -       | **Required**. Enables magnetic effect on the element        |
 | `data-distance`   | `number` | `50`    | Range from element edges where effect is active (pixels)    |
 | `data-attraction` | `number` | `0.3`   | Strength of magnetic pull (0 = weak, 1 = strong)            |
-| `data-fraction`   | `number` | `0.1`   | Speed of magnetic movement (0 = slow, 1 = instant)          |
+| `data-speed`   | `number` | `0.1`   | Speed of magnetic movement (0 = slow, 1 = instant)          |
 
 ### JavaScript Options
 
@@ -169,7 +169,7 @@ When initializing with JavaScript, you can pass these options:
 | `activeClass`    | `string`   | `'magnetizing'` | CSS class added when magnetic effect is active                 |
 | `attraction`     | `number`   | `0.3`           | Strength of magnetic pull (0 = weak, 1 = strong)               |
 | `distance`       | `number`   | `50`            | Range from element edges where effect is active (pixels)       |
-| `fraction`       | `number`   | `0.1`           | Speed of magnetic movement (0 = slow, 1 = instant)             |
+| `speed`       | `number`   | `0.1`           | Speed of magnetic movement (0 = slow, 1 = instant)             |
 | `disableOnTouch` | `boolean`  | `true`          | Disable magnetic effect on touch devices                       |
 | `onEnter`        | `function` | `() => {}`      | Callback fired when mouse enters magnetic area                 |
 | `onExit`         | `function` | `() => {}`      | Callback fired when mouse exits magnetic area                  |
@@ -253,7 +253,7 @@ Callback functions receive a `MagneticData` object with the following properties
 
 ```html
 
-<button data-magnetic data-distance="80" data-attraction="0.8" data-fraction="0.05">
+<button data-magnetic data-distance="80" data-attraction="0.8" data-speed="0.05">
     Subtle Movement
 </button>
 ```

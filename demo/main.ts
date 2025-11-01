@@ -6,17 +6,17 @@ const presets = {
     default: {
         distance: 50,
         attraction: 0.3,
-        fraction: 0.1
+        speed: 0.1
     },
     strong: {
         distance: 120,
         attraction: 0.2,
-        fraction: 0.15
+        speed: 0.15
     },
     quick: {
         distance: 80,
         attraction: 0.8,
-        fraction: 0.05
+        speed: 0.05
     }
 }
 
@@ -27,10 +27,10 @@ const demoWrapper = document.getElementById('demo-wrapper') as HTMLElement
 const demoBtn = document.getElementById('demo-btn') as HTMLElement
 const distanceSlider = document.getElementById('distance') as HTMLInputElement
 const attractionSlider = document.getElementById('attraction') as HTMLInputElement
-const fractionSlider = document.getElementById('fraction') as HTMLInputElement
+const speedSlider = document.getElementById('speed') as HTMLInputElement
 const distanceValue = document.getElementById('distance-value')!
 const attractionValue = document.getElementById('attraction-value')!
-const fractionValue = document.getElementById('fraction-value')!
+const speedValue = document.getElementById('speed-value')!
 const debugToggle = document.getElementById('debug-toggle')!
 const destroyBtn = document.getElementById('destroy-btn') as HTMLElement
 const reinitBtn = document.getElementById('reinit-btn') as HTMLElement
@@ -69,21 +69,21 @@ function updateDebugArea(distance: number) {
 }
 
 // Update display values
-function updateDisplayValues(distance: number, attraction: number, fraction: number) {
+function updateDisplayValues(distance: number, attraction: number, speed: number) {
     distanceValue.textContent = distance + 'px'
     attractionValue.textContent = attraction.toString()
-    fractionValue.textContent = fraction.toString()
+    speedValue.textContent = speed.toString()
 }
 
 // Update sliders
-function updateSliders(distance: number, attraction: number, fraction: number) {
+function updateSliders(distance: number, attraction: number, speed: number) {
     distanceSlider.value = distance.toString()
     attractionSlider.value = attraction.toString()
-    fractionSlider.value = fraction.toString()
+    speedSlider.value = speed.toString()
 }
 
 // Reinitialize the magnetic effect
-function reinitMagnetic(distance: number, attraction: number, fraction: number) {
+function reinitMagnetic(distance: number, attraction: number, speed: number) {
     // Destroy old instance
     if (demoInstance) {
         demoInstance.destroy()
@@ -93,7 +93,7 @@ function reinitMagnetic(distance: number, attraction: number, fraction: number) 
     demoInstance = new MagneticButton(demoWrapper, {
         distance: distance,
         attraction: attraction,
-        fraction: fraction
+        speed: speed
     })
 
     // Update debug area
@@ -103,9 +103,9 @@ function reinitMagnetic(distance: number, attraction: number, fraction: number) 
 // Initialize demo
 function initDemo() {
     const preset = presets[currentStyle]
-    updateDisplayValues(preset.distance, preset.attraction, preset.fraction)
-    updateSliders(preset.distance, preset.attraction, preset.fraction)
-    reinitMagnetic(preset.distance, preset.attraction, preset.fraction)
+    updateDisplayValues(preset.distance, preset.attraction, preset.speed)
+    updateSliders(preset.distance, preset.attraction, preset.speed)
+    reinitMagnetic(preset.distance, preset.attraction, preset.speed)
 }
 
 // Style preset buttons
@@ -121,9 +121,9 @@ styleButtons.forEach(btn => {
         const preset = presets[currentStyle]
 
         // Update everything
-        updateDisplayValues(preset.distance, preset.attraction, preset.fraction)
-        updateSliders(preset.distance, preset.attraction, preset.fraction)
-        reinitMagnetic(preset.distance, preset.attraction, preset.fraction)
+        updateDisplayValues(preset.distance, preset.attraction, preset.speed)
+        updateSliders(preset.distance, preset.attraction, preset.speed)
+        reinitMagnetic(preset.distance, preset.attraction, preset.speed)
     })
 })
 
@@ -131,28 +131,28 @@ styleButtons.forEach(btn => {
 distanceSlider.addEventListener('input', () => {
     const distance = parseFloat(distanceSlider.value)
     const attraction = parseFloat(attractionSlider.value)
-    const fraction = parseFloat(fractionSlider.value)
+    const speed = parseFloat(speedSlider.value)
 
-    updateDisplayValues(distance, attraction, fraction)
-    reinitMagnetic(distance, attraction, fraction)
+    updateDisplayValues(distance, attraction, speed)
+    reinitMagnetic(distance, attraction, speed)
 })
 
 attractionSlider.addEventListener('input', () => {
     const distance = parseFloat(distanceSlider.value)
     const attraction = parseFloat(attractionSlider.value)
-    const fraction = parseFloat(fractionSlider.value)
+    const speed = parseFloat(speedSlider.value)
 
-    updateDisplayValues(distance, attraction, fraction)
-    reinitMagnetic(distance, attraction, fraction)
+    updateDisplayValues(distance, attraction, speed)
+    reinitMagnetic(distance, attraction, speed)
 })
 
-fractionSlider.addEventListener('input', () => {
+speedSlider.addEventListener('input', () => {
     const distance = parseFloat(distanceSlider.value)
     const attraction = parseFloat(attractionSlider.value)
-    const fraction = parseFloat(fractionSlider.value)
+    const speed = parseFloat(speedSlider.value)
 
-    updateDisplayValues(distance, attraction, fraction)
-    reinitMagnetic(distance, attraction, fraction)
+    updateDisplayValues(distance, attraction, speed)
+    reinitMagnetic(distance, attraction, speed)
 })
 
 // Debug toggle
@@ -175,8 +175,8 @@ reinitBtn.addEventListener('click', () => {
     if (!demoInstance) {
         const distance = parseFloat(distanceSlider.value)
         const attraction = parseFloat(attractionSlider.value)
-        const fraction = parseFloat(fractionSlider.value)
-        reinitMagnetic(distance, attraction, fraction)
+        const speed = parseFloat(speedSlider.value)
+        reinitMagnetic(distance, attraction, speed)
     }
 })
 

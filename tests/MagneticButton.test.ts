@@ -76,7 +76,7 @@ describe('MagneticButton', () => {
         it('should use data attributes to override default settings', () => {
             element.setAttribute('data-distance', '50');
             element.setAttribute('data-attraction', '0.8');
-            element.setAttribute('data-fraction', '0.5');
+            element.setAttribute('data-speed', '0.5');
 
             new MagneticButton(element);
 
@@ -128,7 +128,7 @@ describe('MagneticButton', () => {
     // Test 4: Transform Application
     describe('Transform Application', () => {
         it('should apply CSS transform based on mouse position and return to origin', () => {
-            new MagneticButton(element, {attraction: 0.5, fraction: 0.2});
+            new MagneticButton(element, {attraction: 0.5, speed: 0.2});
 
             // Mouse near element should apply transform
             const mouseEvent = new MouseEvent('mousemove', {
