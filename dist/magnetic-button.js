@@ -1,5 +1,5 @@
 /*!
- * @phucbm/magnetic-button 1.0.0
+ * @phucbm/magnetic-button 1.0.1
  * https://phucbm.github.io/magnetic-button/
  *
  * @license MIT
@@ -49,7 +49,7 @@ var MagneticButton = (() => {
         activeClass: "magnetizing",
         attraction: 0.3,
         distance: 50,
-        fraction: 0.1,
+        speed: 0.1,
         disableOnTouch: true,
         onEnter: () => {
         },
@@ -76,12 +76,12 @@ var MagneticButton = (() => {
       _MagneticButton.initializedElements.add(target);
       const dataDistance = parseFloat(target.getAttribute("data-distance") || "");
       const dataAttraction = parseFloat(target.getAttribute("data-attraction") || "");
-      const dataFraction = parseFloat(target.getAttribute("data-fraction") || "");
+      const dataSpeed = parseFloat(target.getAttribute("data-speed") || "");
       this.settings = {
         ...this.settings,
         attraction: !isNaN(dataAttraction) ? dataAttraction : options.attraction ?? this.settings.attraction,
         distance: !isNaN(dataDistance) ? dataDistance : options.distance ?? this.settings.distance,
-        fraction: !isNaN(dataFraction) ? dataFraction : options.fraction ?? this.settings.fraction,
+        speed: !isNaN(dataSpeed) ? dataSpeed : options.speed ?? this.settings.speed,
         ...options
       };
       if (this.settings.disableOnTouch && _MagneticButton.isTouchDevice()) {
@@ -131,8 +131,8 @@ var MagneticButton = (() => {
      * @param endY - Target Y position
      */
     animateButton(target, endX, endY) {
-      this.lerpPos.x = b(this.lerpPos.x, endX, this.settings.fraction);
-      this.lerpPos.y = b(this.lerpPos.y, endY, this.settings.fraction);
+      this.lerpPos.x = b(this.lerpPos.x, endX, this.settings.speed);
+      this.lerpPos.y = b(this.lerpPos.y, endY, this.settings.speed);
       target.style.transform = `translate(${this.lerpPos.x}px, ${this.lerpPos.y}px)`;
     }
     /**

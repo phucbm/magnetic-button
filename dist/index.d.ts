@@ -9,7 +9,7 @@ interface MagneticButtonOptions {
     /** Defines the range within which the magnetic effect is active (in pixels) */
     distance?: number;
     /** Controls the speed of the magnetic movement (0 = slow, 1 = instant) */
-    fraction?: number;
+    speed?: number;
     /** Disable magnetic effect on touch devices (default: true) */
     disableOnTouch?: boolean;
     /** Callback fired when mouse enters the magnetic area */
@@ -35,7 +35,7 @@ interface MagneticData {
  *
  * Usage:
  * ```html
- * <button data-magnetic data-distance="150" data-attraction="0.3" data-fraction="0.2">
+ * <button data-magnetic data-distance="150" data-attraction="0.3" data-speed="0.2">
  *   Hover me!
  * </button>
  * ```
