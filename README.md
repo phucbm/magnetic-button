@@ -10,7 +10,6 @@ interaction.
 [![jsdelivr hits](https://badgen.net/jsdelivr/hits/gh/phucbm/magnetic-button?icon=jsdelivr)](https://www.jsdelivr.com/package/gh/phucbm/magnetic-button)
 [![GitHub release](https://badgen.net/jsdelivr/rank/npm/@phucbm/magnetic-button?icon=jsdelivr)](https://github.com/phucbm/magnetic-button/releases)
 [![pages-build-deployment](https://github.com/phucbm/magnetic-button/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/phucbm/magnetic-button/actions/workflows/pages/pages-build-deployment)
-[![Publish on Release](https://github.com/phucbm/magnetic-button/actions/workflows/publish-on-release.yml/badge.svg)](https://github.com/phucbm/magnetic-button/actions/workflows/publish-on-release.yml)
 [![license](https://badgen.net/github/license/phucbm/magnetic-button?icon=github)](https://github.com/phucbm/magnetic-button/blob/main/LICENSE)
 [![Made in Vietnam](https://raw.githubusercontent.com/webuild-community/badge/master/svg/made.svg)](https://webuild.community)
 
