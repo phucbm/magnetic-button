@@ -12,6 +12,8 @@ export interface MagneticButtonOptions {
     distance?: number;
     /** Controls the speed of the magnetic movement (0 = slow, 1 = instant) */
     fraction?: number;
+    /** Disable magnetic effect on touch devices (default: true) */
+    disableOnTouch?: boolean;
     /** Callback fired when mouse enters the magnetic area */
     onEnter?: (data: MagneticData) => void;
     /** Callback fired when mouse exits the magnetic area */
@@ -67,6 +69,7 @@ export class MagneticButton {
         attraction: 0.3,
         distance: 50,
         fraction: 0.1,
+        disableOnTouch: true,
         onEnter: () => {
         },
         onExit: () => {
@@ -81,6 +84,15 @@ export class MagneticButton {
 
     // Track initialized elements to avoid duplicates
     private static initializedElements = new WeakSet<HTMLElement>();
+
+    /**
+     * Detects if the device is primarily a touch device
+     * @returns true if the device uses touch as primary input
+     */
+    private static isTouchDevice(): boolean {
+        // Check if primary input is touch (coarse pointer without hover capability)
+        return window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+    }
 
     /**
      * Creates a new MagneticButton instance
@@ -120,6 +132,13 @@ export class MagneticButton {
             fraction: !isNaN(dataFraction) ? dataFraction : options.fraction ?? this.settings.fraction,
             ...options,
         };
+
+        // Skip initialization on touch devices if disableOnTouch is true
+        if (this.settings.disableOnTouch && MagneticButton.isTouchDevice()) {
+            // Remove from initialized elements so it can be retried if needed
+            MagneticButton.initializedElements.delete(target);
+            return;
+        }
 
         this.target = target;
         this.boundMagnetize = (e: MouseEvent) => this.magnetize(target, e);
