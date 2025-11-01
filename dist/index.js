@@ -1,5 +1,5 @@
 /*!
- * @phucbm/magnetic-button 0.0.6
+ * @phucbm/magnetic-button 1.0.0
  * https://phucbm.github.io/magnetic-button/
  *
  * @license MIT
@@ -18,8 +18,9 @@ var _MagneticButton = class _MagneticButton {
     this.settings = {
       activeClass: "magnetizing",
       attraction: 0.3,
-      distance: 200,
+      distance: 50,
       fraction: 0.1,
+      disableOnTouch: true,
       onEnter: () => {
       },
       onExit: () => {
@@ -29,6 +30,8 @@ var _MagneticButton = class _MagneticButton {
     };
     this.isEnter = false;
     this.lerpPos = { x: 0, y: 0 };
+    this.target = null;
+    this.boundMagnetize = null;
     if (!target) {
       document.querySelectorAll("[data-magnetic]").forEach((element) => {
         if (!_MagneticButton.initializedElements.has(element)) {
@@ -51,8 +54,21 @@ var _MagneticButton = class _MagneticButton {
       fraction: !isNaN(dataFraction) ? dataFraction : options.fraction ?? this.settings.fraction,
       ...options
     };
-    window.addEventListener("mousemove", (e) => this.magnetize(target, e));
+    if (this.settings.disableOnTouch && _MagneticButton.isTouchDevice()) {
+      _MagneticButton.initializedElements.delete(target);
+      return;
+    }
+    this.target = target;
+    this.boundMagnetize = (e) => this.magnetize(target, e);
+    window.addEventListener("mousemove", this.boundMagnetize);
     target.classList.add("is-magnetized");
+  }
+  /**
+   * Detects if the device is primarily a touch device
+   * @returns true if the device uses touch as primary input
+   */
+  static isTouchDevice() {
+    return window.matchMedia("(hover: none) and (pointer: coarse)").matches;
   }
   /**
    * Main magnetization logic - processes mouse movement and applies magnetic effect
@@ -102,8 +118,40 @@ var _MagneticButton = class _MagneticButton {
     const centerY = viewportOffset.top + target.offsetHeight / 2;
     const deltaX = (mouseX - centerX) * this.settings.attraction;
     const deltaY = (mouseY - centerY) * this.settings.attraction;
-    const distance = Math.sqrt(Math.pow(mouseX - centerX, 2) + Math.pow(mouseY - centerY, 2));
+    const distanceX = Math.max(0, Math.abs(mouseX - centerX) - target.offsetWidth / 2);
+    const distanceY = Math.max(0, Math.abs(mouseY - centerY) - target.offsetHeight / 2);
+    const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
     return { deltaX, deltaY, distance };
+  }
+  /**
+   * Returns the total magnetized area dimensions
+   * @returns Object containing width and height of the magnetized area
+   */
+  getMagnetizedArea() {
+    if (!this.target) {
+      return { width: 0, height: 0 };
+    }
+    return {
+      width: this.target.offsetWidth + this.settings.distance * 2,
+      height: this.target.offsetHeight + this.settings.distance * 2
+    };
+  }
+  /**
+   * Destroys the magnetic button instance and cleans up all event listeners
+   */
+  destroy() {
+    if (this.boundMagnetize) {
+      window.removeEventListener("mousemove", this.boundMagnetize);
+      this.boundMagnetize = null;
+    }
+    if (this.target) {
+      this.target.classList.remove("is-magnetized", this.settings.activeClass);
+      this.target.style.transform = "";
+      _MagneticButton.initializedElements.delete(this.target);
+      this.target = null;
+    }
+    this.isEnter = false;
+    this.lerpPos = { x: 0, y: 0 };
   }
 };
 // Track initialized elements to avoid duplicates

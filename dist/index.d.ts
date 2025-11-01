@@ -4,12 +4,14 @@
 interface MagneticButtonOptions {
     /** CSS class added when the magnetic effect is active */
     activeClass?: string;
-    /** Controls the strength of the magnetic pull (0 = strong, 1 = weak) */
+    /** Controls the strength of the magnetic pull (0 = weak, 1 = strong) */
     attraction?: number;
     /** Defines the range within which the magnetic effect is active (in pixels) */
     distance?: number;
-    /** Controls the speed of the magnetic movement (0 = instant, 1 = slow) */
+    /** Controls the speed of the magnetic movement (0 = slow, 1 = instant) */
     fraction?: number;
+    /** Disable magnetic effect on touch devices (default: true) */
+    disableOnTouch?: boolean;
     /** Callback fired when mouse enters the magnetic area */
     onEnter?: (data: MagneticData) => void;
     /** Callback fired when mouse exits the magnetic area */
@@ -53,7 +55,14 @@ declare class MagneticButton {
     private readonly settings;
     private isEnter;
     private lerpPos;
+    private target;
+    private boundMagnetize;
     private static initializedElements;
+    /**
+     * Detects if the device is primarily a touch device
+     * @returns true if the device uses touch as primary input
+     */
+    private static isTouchDevice;
     /**
      * Creates a new MagneticButton instance
      * @param target - The HTML element to apply magnetic effect to. If null, auto-initializes all elements with data-magnetic attribute
@@ -81,6 +90,18 @@ declare class MagneticButton {
      * @returns Object containing delta values and distance
      */
     private calculateCoordinates;
+    /**
+     * Returns the total magnetized area dimensions
+     * @returns Object containing width and height of the magnetized area
+     */
+    getMagnetizedArea(): {
+        width: number;
+        height: number;
+    };
+    /**
+     * Destroys the magnetic button instance and cleans up all event listeners
+     */
+    destroy(): void;
 }
 
 export { MagneticButton, type MagneticButtonOptions, type MagneticData, MagneticButton as default };
