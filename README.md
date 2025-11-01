@@ -1,5 +1,8 @@
 # 🧲 Magnetic Button
 
+![Screen Recording 2025-11-01 at 23 56 55](https://github.com/user-attachments/assets/721d4b32-8fa6-4974-8b17-bfe644f5764c)
+
+
 A lightweight TypeScript library that creates smooth magnetic attraction effects for HTML elements. Elements with
 the `data-magnetic` attribute will gently follow the mouse cursor when it's nearby, creating an engaging hover
 interaction.
