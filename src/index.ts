@@ -1,4 +1,5 @@
 import lerp from "@phucbm/lerp";
+
 /**
  * Configuration options for the magnetic button effect
  */
@@ -75,6 +76,8 @@ export class MagneticButton {
     };
     private isEnter: boolean = false;
     private lerpPos: LerpPosition = {x: 0, y: 0};
+    private target: HTMLElement | null = null;
+    private boundMagnetize: ((e: MouseEvent) => void) | null = null;
 
     // Track initialized elements to avoid duplicates
     private static initializedElements = new WeakSet<HTMLElement>();
@@ -118,8 +121,11 @@ export class MagneticButton {
             ...options,
         };
 
+        this.target = target;
+        this.boundMagnetize = (e: MouseEvent) => this.magnetize(target, e);
+
         // Watch for mouse move events
-        window.addEventListener('mousemove', (e: MouseEvent) => this.magnetize(target, e));
+        window.addEventListener('mousemove', this.boundMagnetize);
 
         // Add identification class
         target.classList.add('is-magnetized');
@@ -190,10 +196,47 @@ export class MagneticButton {
         const deltaX = (mouseX - centerX) * this.settings.attraction;
         const deltaY = (mouseY - centerY) * this.settings.attraction;
 
-        // Calculate distance between mouse and target center
-        const distance = Math.sqrt(Math.pow(mouseX - centerX, 2) + Math.pow(mouseY - centerY, 2));
+        // Calculate distance from bounding rect edges
+        const distanceX = Math.max(0, Math.abs(mouseX - centerX) - target.offsetWidth / 2);
+        const distanceY = Math.max(0, Math.abs(mouseY - centerY) - target.offsetHeight / 2);
+        const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
 
         return {deltaX, deltaY, distance};
+    }
+
+    /**
+     * Returns the total magnetized area dimensions
+     * @returns Object containing width and height of the magnetized area
+     */
+    public getMagnetizedArea(): { width: number; height: number } {
+        if (!this.target) {
+            return {width: 0, height: 0};
+        }
+
+        return {
+            width: this.target.offsetWidth + this.settings.distance * 2,
+            height: this.target.offsetHeight + this.settings.distance * 2
+        };
+    }
+
+    /**
+     * Destroys the magnetic button instance and cleans up all event listeners
+     */
+    public destroy(): void {
+        if (this.boundMagnetize) {
+            window.removeEventListener('mousemove', this.boundMagnetize);
+            this.boundMagnetize = null;
+        }
+
+        if (this.target) {
+            this.target.classList.remove('is-magnetized', this.settings.activeClass);
+            this.target.style.transform = '';
+            MagneticButton.initializedElements.delete(this.target);
+            this.target = null;
+        }
+
+        this.isEnter = false;
+        this.lerpPos = {x: 0, y: 0};
     }
 }
 
