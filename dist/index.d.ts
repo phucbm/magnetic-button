@@ -18,6 +18,10 @@ interface MagneticButtonOptions {
     onExit?: (data: MagneticData) => void;
     /** Callback fired continuously while mouse is in the magnetic area */
     onUpdate?: (data: MagneticData) => void;
+    /** Maximum horizontal movement in pixels (optional constraint) */
+    maxX?: number | undefined;
+    /** Maximum vertical movement in pixels (optional constraint) */
+    maxY?: number | undefined;
 }
 /**
  * Data object containing magnetic effect calculations

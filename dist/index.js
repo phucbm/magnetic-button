@@ -1,5 +1,5 @@
 /*!
- * @phucbm/magnetic-button 1.0.1
+ * @phucbm/magnetic-button 1.1.0
  * https://phucbm.github.io/magnetic-button/
  *
  * @license MIT
@@ -21,6 +21,10 @@ var _MagneticButton = class _MagneticButton {
       distance: 50,
       speed: 0.1,
       disableOnTouch: true,
+      // @ts-ignore
+      maxX: void 0,
+      // @ts-ignore
+      maxY: void 0,
       onEnter: () => {
       },
       onExit: () => {
@@ -47,11 +51,15 @@ var _MagneticButton = class _MagneticButton {
     const dataDistance = parseFloat(target.getAttribute("data-distance") || "");
     const dataAttraction = parseFloat(target.getAttribute("data-attraction") || "");
     const dataSpeed = parseFloat(target.getAttribute("data-speed") || "");
+    const dataMaxX = parseFloat(target.getAttribute("data-max-x") || "");
+    const dataMaxY = parseFloat(target.getAttribute("data-max-y") || "");
     this.settings = {
       ...this.settings,
       attraction: !isNaN(dataAttraction) ? dataAttraction : options.attraction ?? this.settings.attraction,
       distance: !isNaN(dataDistance) ? dataDistance : options.distance ?? this.settings.distance,
       speed: !isNaN(dataSpeed) ? dataSpeed : options.speed ?? this.settings.speed,
+      maxX: !isNaN(dataMaxX) ? dataMaxX : options.maxX ?? this.settings.maxX,
+      maxY: !isNaN(dataMaxY) ? dataMaxY : options.maxY ?? this.settings.maxY,
       ...options
     };
     if (this.settings.disableOnTouch && _MagneticButton.isTouchDevice()) {
@@ -103,7 +111,15 @@ var _MagneticButton = class _MagneticButton {
   animateButton(target, endX, endY) {
     this.lerpPos.x = lerp(this.lerpPos.x, endX, this.settings.speed);
     this.lerpPos.y = lerp(this.lerpPos.y, endY, this.settings.speed);
-    target.style.transform = `translate(${this.lerpPos.x}px, ${this.lerpPos.y}px)`;
+    let finalX = this.lerpPos.x;
+    let finalY = this.lerpPos.y;
+    if (this.settings.maxX !== void 0) {
+      finalX = Math.max(-this.settings.maxX, Math.min(this.settings.maxX, finalX));
+    }
+    if (this.settings.maxY !== void 0) {
+      finalY = Math.max(-this.settings.maxY, Math.min(this.settings.maxY, finalY));
+    }
+    target.style.transform = `translate(${finalX}px, ${finalY}px)`;
   }
   /**
    * Calculates distances and coordinates between mouse and element center
