@@ -20,6 +20,10 @@ export interface MagneticButtonOptions {
     onExit?: (data: MagneticData) => void;
     /** Callback fired continuously while mouse is in the magnetic area */
     onUpdate?: (data: MagneticData) => void;
+    /** Maximum horizontal movement in pixels (optional constraint) */
+    maxX?: number | undefined;
+    /** Maximum vertical movement in pixels (optional constraint) */
+    maxY?: number | undefined;
 }
 
 /**
@@ -64,12 +68,17 @@ interface LerpPosition {
  * ```
  */
 export class MagneticButton {
+
     private readonly settings: Required<MagneticButtonOptions> = {
         activeClass: 'magnetizing',
         attraction: 0.3,
         distance: 50,
         speed: 0.1,
         disableOnTouch: true,
+        // @ts-ignore
+        maxX: undefined,
+        // @ts-ignore
+        maxY: undefined,
         onEnter: () => {
         },
         onExit: () => {
@@ -123,6 +132,8 @@ export class MagneticButton {
         const dataDistance = parseFloat(target.getAttribute('data-distance') || '');
         const dataAttraction = parseFloat(target.getAttribute('data-attraction') || '');
         const dataSpeed = parseFloat(target.getAttribute('data-speed') || '');
+        const dataMaxX = parseFloat(target.getAttribute('data-max-x') || '');
+        const dataMaxY = parseFloat(target.getAttribute('data-max-y') || '');
 
         // Merge default settings with options and data attributes
         this.settings = {
@@ -130,6 +141,8 @@ export class MagneticButton {
             attraction: !isNaN(dataAttraction) ? dataAttraction : options.attraction ?? this.settings.attraction,
             distance: !isNaN(dataDistance) ? dataDistance : options.distance ?? this.settings.distance,
             speed: !isNaN(dataSpeed) ? dataSpeed : options.speed ?? this.settings.speed,
+            maxX: !isNaN(dataMaxX) ? dataMaxX : options.maxX ?? this.settings.maxX,
+            maxY: !isNaN(dataMaxY) ? dataMaxY : options.maxY ?? this.settings.maxY,
             ...options,
         };
 
@@ -193,8 +206,20 @@ export class MagneticButton {
         this.lerpPos.x = lerp(this.lerpPos.x, endX, this.settings.speed);
         this.lerpPos.y = lerp(this.lerpPos.y, endY, this.settings.speed);
 
-        // Apply transform
-        target.style.transform = `translate(${this.lerpPos.x}px, ${this.lerpPos.y}px)`;
+        // Apply constraints if defined
+        let finalX = this.lerpPos.x;
+        let finalY = this.lerpPos.y;
+
+        if (this.settings.maxX !== undefined) {
+            finalX = Math.max(-this.settings.maxX, Math.min(this.settings.maxX, finalX));
+        }
+
+        if (this.settings.maxY !== undefined) {
+            finalY = Math.max(-this.settings.maxY, Math.min(this.settings.maxY, finalY));
+        }
+
+        // Apply transform with constrained values
+        target.style.transform = `translate(${finalX}px, ${finalY}px)`;
     }
 
     /**

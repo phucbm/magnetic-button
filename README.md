@@ -161,7 +161,9 @@ Add these attributes to your HTML elements to customize the magnetic effect:
 | `data-magnetic`   | -        | -       | **Required**. Enables magnetic effect on the element        |
 | `data-distance`   | `number` | `50`    | Range from element edges where effect is active (pixels)    |
 | `data-attraction` | `number` | `0.3`   | Strength of magnetic pull (0 = weak, 1 = strong)            |
-| `data-speed`   | `number` | `0.1`   | Speed of magnetic movement (0 = slow, 1 = instant)          |
+| `data-speed`      | `number` | `0.1`   | Speed of magnetic movement (0 = slow, 1 = instant)          |
+| `data-max-x`      | `number` | -       | Maximum horizontal movement in pixels (optional constraint) |
+| `data-max-y`      | `number` | -       | Maximum vertical movement in pixels (optional constraint)   |
 
 ### JavaScript Options
 
@@ -172,7 +174,9 @@ When initializing with JavaScript, you can pass these options:
 | `activeClass`    | `string`   | `'magnetizing'` | CSS class added when magnetic effect is active                 |
 | `attraction`     | `number`   | `0.3`           | Strength of magnetic pull (0 = weak, 1 = strong)               |
 | `distance`       | `number`   | `50`            | Range from element edges where effect is active (pixels)       |
-| `speed`       | `number`   | `0.1`           | Speed of magnetic movement (0 = slow, 1 = instant)             |
+| `speed`          | `number`   | `0.1`           | Speed of magnetic movement (0 = slow, 1 = instant)             |
+| `maxX`           | `number`   | -               | Maximum horizontal movement in pixels (optional constraint)    |
+| `maxY`           | `number`   | -               | Maximum vertical movement in pixels (optional constraint)      |
 | `disableOnTouch` | `boolean`  | `true`          | Disable magnetic effect on touch devices                       |
 | `onEnter`        | `function` | `() => {}`      | Callback fired when mouse enters magnetic area                 |
 | `onExit`         | `function` | `() => {}`      | Callback fired when mouse exits magnetic area                  |
